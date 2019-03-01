@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Limit Calculator", "Limit Calculator\Limit Calculator.csproj", "{367F5A0F-5D04-4A85-9BA6-6F44F6D8E8FF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5D48847E-F38A-4313-9D99-EED2CD67AD4C}"
+	ProjectSection(SolutionItems) = preProject
+		Class1.cs = Class1.cs
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{367F5A0F-5D04-4A85-9BA6-6F44F6D8E8FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{367F5A0F-5D04-4A85-9BA6-6F44F6D8E8FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{367F5A0F-5D04-4A85-9BA6-6F44F6D8E8FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{367F5A0F-5D04-4A85-9BA6-6F44F6D8E8FF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9E986D95-E07E-4E51-A6D1-9B4FA52B9519}
+	EndGlobalSection
+EndGlobal
