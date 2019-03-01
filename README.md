@@ -1,4 +1,4 @@
-Takes in a function and limit and calculates the given limit. I first convert start <img src="https://latex.codecogs.com/svg.latex?\pm&space;" title="\pm x" />1 away from the limit and converge to it, checking that the absolute difference between the function values reaches a satisfactory value. The functions are converted from a string to mathematical values through the use of postfix evaluation. If the left and right x values get too close, and we still haven't reached a converging value, then the program exits with a limit of NaN.
+Takes in a function and limit and calculates the given limit. I first start <img src="https://latex.codecogs.com/svg.latex?\pm&space;" title="\pm x" />1 away from the limit and converge to it, checking that the absolute difference between the function values reaches a satisfactory value. The functions are converted from a string to mathematical values through the use of postfix evaluation. If the left and right x values get too close, and we still haven't reached a converging value, then the program exits with a limit of NaN.
 
 Example calculations:
 
