@@ -9,7 +9,7 @@ namespace Limit_Calculator
 {
     class LimitCalc
     {
-        static double EvaluateLimit(string funct, double limit)
+        static double EvaluateLimit(string func, double limit)
         {
             /*
             * Calculates the limit as it approaches the value from both 
@@ -20,13 +20,14 @@ namespace Limit_Calculator
 
             //Constants
             const double thresh = 1e-3;
+            const double thresh_x = 1e-5;
             const double delta = 0.0001;
 
             //Initial step to initialize everything
             double x_l = limit - 1;
             double x_r = limit + 1;
-            double left_ans = Calculator.Calculate(funct, x_l);
-            double right_ans = Calculator.Calculate(funct, x_r);
+            double left_ans = Calculator.Calculate(func, x_l);
+            double right_ans = Calculator.Calculate(func, x_r);
             double del = Math.Abs(right_ans - left_ans);
             double del_x = Math.Abs(x_l - x_r);
             double ans = (left_ans + right_ans) / 2;
@@ -39,7 +40,7 @@ namespace Limit_Calculator
                 {
                     return ans;
                 }
-                if (del_x < thresh)
+                if (del_x < thresh_x )
                 {
                     return double.NaN;
                 }
@@ -49,8 +50,8 @@ namespace Limit_Calculator
                 x_r -= delta;
 
                 //Calculate function at current step
-                left_ans = Calculator.Calculate(funct, x_l);
-                right_ans = Calculator.Calculate(funct, x_r);
+                left_ans = Calculator.Calculate(func, x_l);
+                right_ans = Calculator.Calculate(func, x_r);
 
                 //Get differences for break conditions
                 del = Math.Abs(right_ans - left_ans);
@@ -67,28 +68,44 @@ namespace Limit_Calculator
             * and returns the value of the function if it converges or returns "Does
             * not converge" if it diverges
             */
-            string funct, limStr;
-            double lim, ans;
+            string func, limStr;
+            double lim = 0, ans;
+
+            //Operator dictionary to define order of operations
+            Dictionary<string, int> operators = new Dictionary<string, int>();
+            OperatorFunctions.Operators(operators);
 
             //Let user keep entering functions and limits as they desire
             while (true)
             {
                 //User input
                 Console.WriteLine("Input f(x): ");
-                funct = Console.ReadLine();
+                func = Console.ReadLine();
                 Console.WriteLine("Input limit: ");
                 limStr = Console.ReadLine();
 
-                //Convert limit to double, filling in any constants
-                limStr = StringFunctions.ReplaceConstants(limStr);
-                lim = Calculator.Convert2Postfix(limStr);
+                List<string> limList = new List<string>();
+                limList = StringFunctions.Convert2List(limStr);
+
+                //Check for operators in limit and convert appropriately
+                if (limList.Any(operators.ContainsKey))
+                {
+                    limStr = StringFunctions.ReplaceConstants(limStr);
+                    lim = Calculator.Convert2Postfix(limStr);
+                }
+                else
+                {
+                    limStr = StringFunctions.ReplaceConstants(limStr);
+                    lim = double.Parse(limStr);
+                }
 
                 //Remove any whitespace for parsing
-                funct = funct.Replace(" ", "");
+                func = func.Replace(" ", "");
 
                 //Calculate limits and output answer
-                ans = EvaluateLimit(funct, lim);
-                Console.WriteLine("Limit as x->" + lim + " of " + funct + " = " + Math.Round(ans, 5));
+                ans = EvaluateLimit(func, lim);
+                Console.WriteLine("Limit as x->" + lim + " of " + func + " = " + Math.Round(ans, 5));
+                Console.ReadLine();
             }
         }
     }

@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calculator.cs" />
+    <Compile Include="MathFunctions.cs" />
     <Compile Include="StringFunctions.cs" />
     <Compile Include="OperatorFunctions.cs" />
     <Compile Include="LimitCalc.cs" />

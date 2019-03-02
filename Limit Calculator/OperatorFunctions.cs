@@ -71,7 +71,7 @@ namespace Limit_Calculator
             }
             else if (op == "!")
             {
-                return Factorial(int.Parse(b));
+                return MathFunctions.Gamma(double.Parse(b));
             }
             else if (op == "sqrt")
             {
@@ -83,7 +83,7 @@ namespace Limit_Calculator
             }
         }
 
-        public static void OperatorFuncs(List<string> operatorFuncs)
+        public static void SingleVariableFuncs(List<string> singleVarFuncs)
         {
             /*
              * Adds operators that are functions (sin, cos, etc.) to
@@ -91,15 +91,15 @@ namespace Limit_Calculator
              * we will only pop the top value for these functions
              */
 
-            operatorFuncs.Add("sqrt");
-            operatorFuncs.Add("!");
-            operatorFuncs.Add("~");
-            operatorFuncs.Add("cos");
-            operatorFuncs.Add("sin");
-            operatorFuncs.Add("tan");
-            operatorFuncs.Add("arccos");
-            operatorFuncs.Add("arcsin");
-            operatorFuncs.Add("arctan");
+            singleVarFuncs.Add("sqrt");
+            singleVarFuncs.Add("!");
+            singleVarFuncs.Add("~");
+            singleVarFuncs.Add("cos");
+            singleVarFuncs.Add("sin");
+            singleVarFuncs.Add("tan");
+            singleVarFuncs.Add("arccos");
+            singleVarFuncs.Add("arcsin");
+            singleVarFuncs.Add("arctan");
         }
 
         public static void Operators(Dictionary<string, int> operators)
@@ -125,22 +125,6 @@ namespace Limit_Calculator
             operators.Add("%", 2);
             operators.Add("+", 1);
             operators.Add("-", 1);
-        }
-        private static double Factorial(int n)
-        {
-            /*
-             * Recursively calculates the factorial function
-             * of an integer n.
-             */
-
-            if (n == 1)
-            {
-                return 1;
-            }
-            else
-            {
-                return n * Factorial(n - 1);
-            }
         }
     }
 }

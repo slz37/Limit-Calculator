@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data;
 
 namespace Limit_Calculator
 {
@@ -14,6 +13,8 @@ namespace Limit_Calculator
         {
             /*
              * Converts a given infix expression to a postfix expression
+             * to calculate the values used for testing convergence of
+             * limits
              */
 
             List<String> infixList = new List<string>();
@@ -49,7 +50,7 @@ namespace Limit_Calculator
                         if (stack.Peek() == "(")
                         {
                             stack.Pop();
-                            continue;
+                            break;
                         }
                         else
                         {
@@ -79,7 +80,8 @@ namespace Limit_Calculator
                 else
                 {
                     /*
-                     * Add Numbers directly to string
+                     * Add Numbers directly to string, the first
+                     * one doesn't need a buffer space in-between
                      */
                     if (postfixExp.Length == 0)
                     {
@@ -100,45 +102,46 @@ namespace Limit_Calculator
         {
             /*
              * Takes a given postfix expression and evaluates it
+             * and returns the valueto the main program to test
+             * for convergence
              */
 
             string x, y, ans;
             string[] postfixList = postfixExp.Split(null);
             Stack<string> stack = new Stack<string>();
-            DataTable dt = new DataTable();
 
             //Operator dictionary to define order of operations
             Dictionary<string, int> operators = new Dictionary<string, int>();
-            List<string> operatorFunc = new List<string>();
+            List<string> singleVarFuncs = new List<string>();
             OperatorFunctions.Operators(operators);
-            OperatorFunctions.OperatorFuncs(operatorFunc);
+            OperatorFunctions.SingleVariableFuncs(singleVarFuncs);
 
             //Iterate over all tokens in postfix expression
             foreach (string token in postfixList)
             {
-                if ((operators.Any(p => p.Key == token)) & !operatorFunc.Any(token.Contains))
+                if ((operators.Any(p => p.Key == token)) & !singleVarFuncs.Any(token.Contains))
                 {
                     //Evaluate functions that take two arguments
                     y = stack.Pop();
                     x = stack.Pop();
 
-                    ans = OperatorFunctions.EvaluateExp(x, y, token.ToString()).ToString();
+                    ans = OperatorFunctions.EvaluateExp(x, y, token).ToString();
 
                     stack.Push(ans);
                 }
-                else if (operatorFunc.Any(token.Contains))
+                else if (singleVarFuncs.Any(token.Contains))
                 {
                     //Evaluate functions that only take a single argument
                     x = "temp";
                     y = stack.Pop();
 
-                    ans = OperatorFunctions.EvaluateExp(x, y, token.ToString()).ToString();
+                    ans = OperatorFunctions.EvaluateExp(x, y, token).ToString();
 
                     stack.Push(ans);
                 }
                 else
                 {
-                    stack.Push(token.ToString());
+                    stack.Push(token);
                 }
             }
 
@@ -147,7 +150,7 @@ namespace Limit_Calculator
             return double.Parse(ans);
         }
 
-        public static double Calculate(string funct, double value)
+        public static double Calculate(string func, double value)
         {
             /*
              * Takes a function replaces variables with value, converts to postfix,
@@ -157,9 +160,9 @@ namespace Limit_Calculator
             double ans;
 
             //Replace and fill in any constant values
-            string analytic_funct = StringFunctions.ReplaceConstants(funct, value);
+            string analytic_func = StringFunctions.ReplaceConstants(func, value);
 
-            ans = Convert2Postfix(analytic_funct);
+            ans = Convert2Postfix(analytic_func);
             return ans;
         }
     }
