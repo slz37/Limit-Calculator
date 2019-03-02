@@ -51,6 +51,12 @@ namespace Limit_Calculator
             }
         }
 
+        static void Main2(string[] args)
+        {
+            Console.Write(Gamma(4.001));
+            Console.Read();
+        }
+
         private static double LanczosApprox(double n)
         {
             double y;
@@ -65,11 +71,12 @@ namespace Limit_Calculator
                 * limit. In this context, we want gamma(0) -> 1 and not inf.
                 */
                 y = LanczosApprox(1 - n); 
+
                 //y = Math.PI / (Math.Sin(Math.PI * n) * LanczosApprox(1 - n));
             }
             else
             {
-                n -= 1; //This formulation calculates Gamma(n + 1), so subtract 1 to compensate
+                //n -= 1; //This formulation calculates Gamma(n + 1), so subtract 1 to compensate
                 y =  Math.Sqrt(2 * Math.PI) * Math.Pow((n + g - 0.5), n + 0.5) * Math.Exp(-(n + g - 0.5)) * S(n, g);
             }
 
@@ -79,31 +86,114 @@ namespace Limit_Calculator
         private static double S(double n, int g)
         {
             /*
-             * Found at wikipedia for Lanczos approximation
-             *  g = 7 and n = 9
+             * Calculates the S term for the Lanczos
+             * approximation
              */
-            double[] p = {0.99999999999980993,
-                676.5203681218851,
-                -1259.1392167224028,
-                771.32342877765313,
-                -176.61502916214059,
-                12.507343278686905,
-                -0.13857109526572012,
-                9.9843695780195716e-6,
-                1.5056327351493116e-7 };
-            double S = p[0];
+
+            //Lanczos coefficients
+            List<List<double>> p = LanczosCoefficients.Calculate(8, g - 1);
+            
+            double S = p[0][0];
 
             //Sum coefficients to get S
             int i = -1;
-            foreach (double pval in p)
+            foreach (List<double> pval in p)
             {
                 if (i >= 0)
                 {
-                    S += pval / (n + i + 1);
+                    S += pval[0] / (n + i + 1);
                 }
                 i += 1;
             }
             return S;
+        }
+
+        public static double DoubleFac(double n)
+        {
+            /*
+             * Calculates the double factorial of an
+             * integer n
+             */
+
+            if (n <= 1)
+            {
+                return 1;
+            }
+            else
+            {
+                return n * DoubleFac(n - 2);
+            }
+        }
+        public static List<List<double>> MatrixMultiplication(List<List<double>> A, List<List<double>> B)
+        {
+            /*
+             * For a NxM matrix A and MxP matrix B, performs the matrix multiplication
+             * to calculate a resultant matrix of size NxP.
+             */
+            List<List<double>> resultant = new List<List<double>>();
+            double N = A.Count();
+            double M = B.Count();
+            double P = B[0].Count();
+
+            //Not NxM MxP
+            if (A[0].Count() != B.Count())
+            {
+                throw new System.ArgumentException("Matrices do not share inner dimension!", "original");
+            }
+
+            //Initialize resultant matrix
+            for (int i = 0; i < N; i++)
+            {
+                //Add new row
+                resultant.Add(new List<double>());
+
+                for (int j = 0; j < P; j++)
+                {
+                    resultant[i].Insert(j, 0);
+                }
+            }
+
+            for (int i = 0; i < N; i++)
+            {
+                for (int j = 0; j < P; j++)
+                {
+                    for (int k = 0; k < M; k++)
+                    {
+                        resultant[i][j] += A[i][k] * B[k][j];
+                    }
+                }
+            }
+
+            return resultant;
+        }
+
+        public static double Combination(int n, int k)
+        {
+            /*
+             * Calculates the combination of two integers
+             * n and k
+             */
+
+            if (k > n)
+            {
+                return 0;
+            }
+            else if ((n == 0) & (k == 0))
+            {
+                return 1;
+            }
+            else if (n == 0)
+            {
+                return 0;
+            }
+            else if (k < 0)
+            {
+                return 0;
+            }
+            else
+            {
+                return MathFunctions.Factorial(n) / (MathFunctions.Factorial(k) * (MathFunctions.Factorial(n - k)));
+            }
         }
     }
 }

@@ -84,6 +84,7 @@ namespace Limit_Calculator
                 Console.WriteLine("Input limit: ");
                 limStr = Console.ReadLine();
 
+                //Create list of elements in limit to test for operators
                 List<string> limList = new List<string>();
                 limList = StringFunctions.Convert2List(limStr);
 

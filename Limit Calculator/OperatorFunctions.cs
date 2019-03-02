@@ -112,7 +112,7 @@ namespace Limit_Calculator
 
             operators.Add("sqrt", 3);
             operators.Add("!", 3);
-            operators.Add("^", 3);
+            operators.Add("^", 2);
             operators.Add("~", 3);
             operators.Add("cos", 3);
             operators.Add("sin", 3);
