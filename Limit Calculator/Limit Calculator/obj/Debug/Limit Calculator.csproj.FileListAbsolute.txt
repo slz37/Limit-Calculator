@@ -1,0 +1,7 @@
+C:\Users\Luke\Documents\Programming\Git\Csharp-Practice\Limit Calculator\Limit Calculator\bin\Debug\Limit Calculator.exe.config
+C:\Users\Luke\Documents\Programming\Git\Csharp-Practice\Limit Calculator\Limit Calculator\bin\Debug\Limit Calculator.exe
+C:\Users\Luke\Documents\Programming\Git\Csharp-Practice\Limit Calculator\Limit Calculator\bin\Debug\Limit Calculator.pdb
+C:\Users\Luke\Documents\Programming\Git\Csharp-Practice\Limit Calculator\Limit Calculator\obj\Debug\Limit Calculator.csprojAssemblyReference.cache
+C:\Users\Luke\Documents\Programming\Git\Csharp-Practice\Limit Calculator\Limit Calculator\obj\Debug\Limit Calculator.csproj.CoreCompileInputs.cache
+C:\Users\Luke\Documents\Programming\Git\Csharp-Practice\Limit Calculator\Limit Calculator\obj\Debug\Limit Calculator.exe
+C:\Users\Luke\Documents\Programming\Git\Csharp-Practice\Limit Calculator\Limit Calculator\obj\Debug\Limit Calculator.pdb
