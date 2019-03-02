@@ -33,7 +33,4 @@ Limit as x->3.14159 of arctan(x) = 1.26263
 List of known things that do not work:
 
 1) Any limit whose function's domain does not extend to both sides of the limit. Ex: <img src="https://latex.codecogs.com/svg.latex?\lim_{x&space;\to&space;0}&space;\sqrt{x}&space;=&space;0" title="\lim_{x \to 0} \sqrt{x} = 0" />, but 
-code fails since <img src="https://latex.codecogs.com/svg.latex?\sqrt{x}" title="\sqrt{x}" /> is undefined for x<0
-2) Exponentials
-3) Factorials
-4) sin(cos(x))
+code fails since <img src="https://latex.codecogs.com/svg.latex?\sqrt{x}" title="\sqrt{x}" /> is undefined for x<0. I might leave this since you could define the definition of a limit as existing if only both left and right sided limits exist at the value for the function.
