@@ -1,3 +1,5 @@
+This became bigger than I expected it to be, so I moved it out of my C# Practice repository into it's own.
+
 Takes in a function and limit and calculates the given limit. I first start <img src="https://latex.codecogs.com/svg.latex?\pm&space;" title="\pm x" />1 away from the limit and converge to it, checking that the absolute difference between the function values reaches a satisfactory value. The functions are converted from a string to mathematical values through the use of postfix evaluation. If the left and right x values get too close, and we still haven't reached a converging value, then the program exits with a limit of NaN.
 
 Example calculations:
