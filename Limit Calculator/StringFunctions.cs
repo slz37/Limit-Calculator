@@ -96,14 +96,14 @@ namespace Limit_Calculator
             {
                 if ((char.IsDigit(token)) | (token == '.'))
                 {
+                    //Deep clone list for constant length to iterate over
+                    Queue<string> tempQueue = new Queue<string>();
+                    tempQueue = DeepCloneQueue(queue);
+                    int queueSize = tempQueue.Count();
+
                     //If last digit, clear queue and add to list, else add to queue
                     if (curInd == Exp.Count() - 1)
                     {
-                        //Deep clone list for constant length to iterate over
-                        Queue<string> tempQueue = new Queue<string>();
-                        tempQueue = DeepCloneQueue(queue);
-                        int queueSize = tempQueue.Count();
-
                         //Clear queue or add to list if queue empty
                         if (queueSize != 0)
                         {
@@ -122,6 +122,20 @@ namespace Limit_Calculator
                     }
                     else
                     {
+                        //If operator in queue clear the first
+                        if (queueSize != 0)
+                        {
+                            if (char.IsLetter(char.Parse(queue.Peek())))
+                            {
+                                string tempStr = "";
+                                for (int i = 0; i < queueSize; i++)
+                                {
+                                    tempStr += queue.Dequeue();
+                                }
+                                newExp.Add(tempStr);
+                            }
+                        }
+
                         //Not last digit, so just add it to the queue
                         queue.Enqueue(token.ToString());
                     }

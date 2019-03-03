@@ -85,6 +85,10 @@ namespace Limit_Calculator
             {
                 return Math.Abs(double.Parse(b));
             }
+            else if (op == "log")
+            {
+                return Math.Log(double.Parse(b), double.Parse(a));
+            }
             else
             {
                 throw new System.ArgumentException("Error in evaluating expression!", "original");
@@ -120,6 +124,7 @@ namespace Limit_Calculator
              * operators
              */
 
+            operators.Add("log", 3);
             operators.Add("abs", 3);
             operators.Add("ln", 3);
             operators.Add("sqrt", 3);
