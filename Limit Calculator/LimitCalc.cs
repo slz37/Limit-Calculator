@@ -100,7 +100,7 @@ namespace Limit_Calculator
         /// "inf" if it diverges.
         /// </summary>
         /// <param name="args"></param>
-        static void Main(string[] args)
+        static void Main2(string[] args)
         {
             string func, limStr;
             double lim = 0, ans;
@@ -142,6 +142,16 @@ namespace Limit_Calculator
                 Console.WriteLine("Limit as x->" + lim + " of " + func + " = " + Math.Round(ans, 3));
                 Console.ReadLine();
             }
+        }
+
+        static void Main(string[] args)
+        {
+            //Works for x^7, gets to 7x^6 before it breaks
+            string func = "(x^7+2*x)";
+            string test = MathFunctions.Derivative(func);
+
+            Console.WriteLine(test);
+            Console.ReadLine();
         }
     }
 }
