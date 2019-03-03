@@ -77,6 +77,14 @@ namespace Limit_Calculator
             {
                 return Math.Sqrt(double.Parse(b));
             }
+            else if (op == "ln")
+            {
+                return Math.Log(double.Parse(b));
+            }
+            else if (op == "abs")
+            {
+                return Math.Abs(double.Parse(b));
+            }
             else
             {
                 throw new System.ArgumentException("Error in evaluating expression!", "original");
@@ -91,6 +99,8 @@ namespace Limit_Calculator
              * we will only pop the top value for these functions
              */
 
+            singleVarFuncs.Add("abs");
+            singleVarFuncs.Add("ln");
             singleVarFuncs.Add("sqrt");
             singleVarFuncs.Add("!");
             singleVarFuncs.Add("~");
@@ -110,9 +120,10 @@ namespace Limit_Calculator
              * operators
              */
 
+            operators.Add("abs", 3);
+            operators.Add("ln", 3);
             operators.Add("sqrt", 3);
             operators.Add("!", 3);
-            operators.Add("^", 2);
             operators.Add("~", 3);
             operators.Add("cos", 3);
             operators.Add("sin", 3);
@@ -120,6 +131,7 @@ namespace Limit_Calculator
             operators.Add("arccos", 3);
             operators.Add("arcsin", 3);
             operators.Add("arctan", 3);
+            operators.Add("^", 2);
             operators.Add("*", 2);
             operators.Add("/", 2);
             operators.Add("%", 2);

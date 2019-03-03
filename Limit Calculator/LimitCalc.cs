@@ -21,7 +21,7 @@ namespace Limit_Calculator
             //Constants
             const double thresh = 1e-3;
             const double thresh_x = 1e-5;
-            const double delta = 0.0001;
+            const double delta = 1e-4;
 
             //Initial step to initialize everything
             double x_l = limit - 1;
@@ -59,6 +59,8 @@ namespace Limit_Calculator
 
                 //Take average of two as current solution
                 ans = (left_ans + right_ans) / 2;
+
+                //Console.WriteLine(x_l + " " + x_r + " " + del_x + " " + left_ans + " " + right_ans + " " + del + " " + ans);
             }
         }
         static void Main(string[] args)
@@ -105,7 +107,7 @@ namespace Limit_Calculator
 
                 //Calculate limits and output answer
                 ans = EvaluateLimit(func, lim);
-                Console.WriteLine("Limit as x->" + lim + " of " + func + " = " + Math.Round(ans, 5));
+                Console.WriteLine("Limit as x->" + lim + " of " + func + " = " + Math.Round(ans, 3));
                 Console.ReadLine();
             }
         }

@@ -33,7 +33,6 @@ namespace Limit_Calculator
 
             List<List<double>> B = new List<List<double>>();
 
-
             //Iterate over all rows and columns to create matrix
             for (int i = 0; i < n; i++)
             {
