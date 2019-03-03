@@ -8,15 +8,18 @@ namespace Limit_Calculator
 {
     class OperatorFunctions
     {
+        /// <summary>
+        /// Evaluate a given operator on values.Converts each
+        /// input from a string to their equivalent mathematical
+        /// expression. Doesn't contain every function, but should
+        /// capture most of them.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <param name="op"></param>
+        /// <returns></returns>
         public static double EvaluateExp(string a, string b, string op)
         {
-            /*
-             * Evaluate a given operator on values. Converts each
-             * input from a string to their equivalent mathematical
-             * expression. Doesn't contain every function, but should
-             * capture most of them.
-             */
-
             if (op == "+")
             {
                 return double.Parse(a) + double.Parse(b);
@@ -95,14 +98,14 @@ namespace Limit_Calculator
             }
         }
 
+        /// <summary>
+        /// Adds operators that are functions(sin, cos, etc.) to
+        /// a list so that when we evaluate the postfix expression,
+        /// we will only pop the top value for these functions.
+        /// </summary>
+        /// <param name="singleVarFuncs"></param>
         public static void SingleVariableFuncs(List<string> singleVarFuncs)
         {
-            /*
-             * Adds operators that are functions (sin, cos, etc.) to
-             * a list so that when we evaluate the postfix expression,
-             * we will only pop the top value for these functions
-             */
-
             singleVarFuncs.Add("abs");
             singleVarFuncs.Add("ln");
             singleVarFuncs.Add("sqrt");
@@ -116,27 +119,27 @@ namespace Limit_Calculator
             singleVarFuncs.Add("arctan");
         }
 
+        /// <summary>
+        /// Adds operators to dictionary with each key defining the
+        /// relative order of operations in comparison with other
+        /// operators.
+        /// </summary>
+        /// <param name="operators"></param>
         public static void Operators(Dictionary<string, int> operators)
         {
-            /*
-             * Adds operators to dictionary with each key defining the
-             * relative order of operations in comparison with other
-             * operators
-             */
-
-            operators.Add("log", 3);
-            operators.Add("abs", 3);
-            operators.Add("ln", 3);
-            operators.Add("sqrt", 3);
-            operators.Add("!", 3);
-            operators.Add("~", 3);
-            operators.Add("cos", 3);
-            operators.Add("sin", 3);
-            operators.Add("tan", 3);
-            operators.Add("arccos", 3);
-            operators.Add("arcsin", 3);
-            operators.Add("arctan", 3);
-            operators.Add("^", 2);
+            operators.Add("log", 4);
+            operators.Add("abs", 4);
+            operators.Add("ln", 4);
+            operators.Add("sqrt", 4);
+            operators.Add("!", 4);
+            operators.Add("~", 4);
+            operators.Add("cos", 4);
+            operators.Add("sin", 4);
+            operators.Add("tan", 4);
+            operators.Add("arccos", 4);
+            operators.Add("arcsin", 4);
+            operators.Add("arctan", 4);
+            operators.Add("^", 3);
             operators.Add("*", 2);
             operators.Add("/", 2);
             operators.Add("%", 2);

@@ -8,13 +8,38 @@ namespace Limit_Calculator
 {
     class MathFunctions
     {
+        /// <summary>
+        /// Calculates the symbolic derivative of the input function.
+        /// </summary>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public static string Derivative(string func)
+        {
+            
+
+            /*
+             * Gonna need a stack of some sort
+             * Probably split recursively on each
+             * operator level then calculate derivative
+             * and bring it all together
+             */
+            string funcDer = "";
+            Stack<string> stack = new Stack<string>();
+
+
+
+
+
+            return funcDer;
+        }
+
+        /// <summary>
+        /// Recursively calculates the factorial function of an integer n.
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
         public static double Factorial(int n)
         {
-            /*
-             * Recursively calculates the factorial function
-             * of an integer n.
-             */
-
             if (n == 0)
             {
                 return 1;
@@ -25,6 +50,51 @@ namespace Limit_Calculator
             }
         }
 
+        /// <summary>
+        /// Calculates the double factorial of an integer n.
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public static double DoubleFac(double n)
+        {
+            if (n <= 1)
+            {
+                return 1;
+            }
+            else
+            {
+                return n * DoubleFac(n - 2);
+            }
+        }
+
+        /// <summary>
+        /// Calculates the combination of two integers n and k.
+        /// </summary>
+        /// <param name="n"></param>
+        /// <param name="k"></param>
+        /// <returns></returns>
+        public static double Combination(int n, int k)
+        {
+            if ((n == 0) & (k == 0))
+            {
+                return 1;
+            }
+            else if ((k > n) || (n == 0) || (k < 0))
+            {
+                return 0;
+            }
+            else
+            {
+                return MathFunctions.Factorial(n) / (MathFunctions.Factorial(k) * (MathFunctions.Factorial(n - k)));
+            }
+        }
+
+        /// <summary>
+        /// Calculates gamma(n), where gamma is an extension of
+        /// the factorial function to the complex domain.
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
         public static double Gamma(double n)
         {
             /*
@@ -51,6 +121,12 @@ namespace Limit_Calculator
             }
         }
 
+        /// <summary>
+        /// Estimates gamma(n) for any complex number using the
+        /// Lanczos Approximation method.
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
         private static double LanczosApprox(double n)
         {
             double y;
@@ -77,76 +153,59 @@ namespace Limit_Calculator
             return y;
         }
 
+        /// <summary>
+        /// Calculates the S term for the Lanczos approximation.
+        /// </summary>
+        /// <param name="n"></param>
+        /// <param name="g"></param>
+        /// <returns></returns>
         private static double S(double n, int g)
         {
-            /*
-             * Calculates the S term for the Lanczos
-             * approximation
-             */
+            //Lanczos coefficients - calculated from the line below
+            //double[] p = LanczosCoefficients.Calculate(8, g - 1);
+            List<double> p = new List<double>{0.999999999985635,
+            676.52036812188,
+            -1259.13921672634,
+            771.323428720698,
+            -176.615029376393,
+            12.5073443051339,
+            -0.138574190812469,
+            1.06954947029389E-05};
 
-            //Lanczos coefficients
-            List<List<double>> p = LanczosCoefficients.Calculate(8, g - 1);
-            
-            double S = p[0][0];
+            double S = p[0];
 
             //Sum coefficients to get S
             int i = -1;
-            foreach (List<double> pval in p)
+            foreach (double pval in p)
             {
                 if (i >= 0)
                 {
-                    S += pval[0] / (n + i + 1);
+                    S += pval / (n + i + 1);
                 }
                 i += 1;
             }
             return S;
         }
 
-        public static double DoubleFac(double n)
+        /// <summary>
+        /// For a NxM matrix A and MxP matrix B, performs the matrix 
+        /// multiplication to calculate a resultant matrix of size NxP.
+        /// </summary>
+        /// <param name="A"></param>
+        /// <param name="B"></param>
+        /// <returns></returns>
+        public static double[,] MatrixMultiplication(double[,] A, double[,] B)
         {
-            /*
-             * Calculates the double factorial of an
-             * integer n
-             */
-
-            if (n <= 1)
-            {
-                return 1;
-            }
-            else
-            {
-                return n * DoubleFac(n - 2);
-            }
-        }
-        public static List<List<double>> MatrixMultiplication(List<List<double>> A, List<List<double>> B)
-        {
-            /*
-             * For a NxM matrix A and MxP matrix B, performs the matrix multiplication
-             * to calculate a resultant matrix of size NxP.
-             */
-            List<List<double>> resultant = new List<List<double>>();
-            double N = A.Count();
-            double M = B.Count();
-            double P = B[0].Count();
+            int N = A.GetLength(0);
+            int M = B.GetLength(0);
+            int P = B.GetLength(1);
+            double[,] resultant = new double[N, P];
 
             //Not NxM MxP
-            if (A[0].Count() != B.Count())
+            if (A.GetLength(1) != M)
             {
                 throw new System.ArgumentException("Matrices do not share inner dimension!", "original");
             }
-
-            //Initialize resultant matrix
-            for (int i = 0; i < N; i++)
-            {
-                //Add new row
-                resultant.Add(new List<double>());
-
-                for (int j = 0; j < P; j++)
-                {
-                    resultant[i].Insert(j, 0);
-                }
-            }
-
 
             //Calculate resulting values and add to new matrix
             for (int i = 0; i < N; i++)
@@ -155,7 +214,7 @@ namespace Limit_Calculator
                 {
                     for (int k = 0; k < M; k++)
                     {
-                        resultant[i][j] += A[i][k] * B[k][j];
+                        resultant[i, j] += A[i, k] * B[k, j];
                     }
                 }
             }
@@ -163,25 +222,35 @@ namespace Limit_Calculator
             return resultant;
         }
 
-        public static double Combination(int n, int k)
+        /// <summary>
+        /// Takes in a NxM matrix that should be a column vector
+        /// and removes the extraneous dimension.
+        /// </summary>
+        /// <param name="Matrix"></param>
+        /// <returns></returns>
+        public static double[] ReduceDimensions(double[,] Matrix)
         {
-            /*
-             * Calculates the combination of two integers
-             * n and k
-             */
+            int N = Matrix.GetLength(0);
+            int M = Matrix.GetLength(1);
+            double[] newMatrix = new double[N];
 
-            if ((n == 0) & (k == 0))
+            //Iterate over every element and remove extra dimensions
+            for (int i = 0; i < N; i++)
             {
-                return 1;
+                for (int j = 0; j < M; j++)
+                {
+                    if (Matrix[i, j] == 0)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        newMatrix[i] = Matrix[i, j];
+                    }
+                }
             }
-            else if ((k > n) || (n == 0) || (k < 0))
-            {
-                return 0;
-            }
-            else
-            {
-                return MathFunctions.Factorial(n) / (MathFunctions.Factorial(k) * (MathFunctions.Factorial(n - k)));
-            }
+
+            return newMatrix;
         }
     }
 }

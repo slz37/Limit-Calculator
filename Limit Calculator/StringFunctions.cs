@@ -8,28 +8,68 @@ namespace Limit_Calculator
 {
     class StringFunctions
     {
+        /// <summary>
+        /// Finds the outer most division in a function,
+        /// e.g. (x/2+5*x)/(3+6*x) would return
+        /// an index of 9.
+        /// </summary>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public static int FindOuterSlash(string func)
+        {
+            int index = 0;
+            Stack<char> stack = new Stack<char>();
+
+            //Iterate over everything in string
+            foreach (char token in func)
+            {
+                if (token == '(')
+                {
+                    stack.Push(token);
+                }
+                else if (token == ')')
+                {
+                    stack.Pop();
+                }
+                else if ((token == '/') & (stack.Count == 0))
+                {
+                    break;
+                }
+
+                index++;
+            }
+
+            return index;
+        }
+
+        /// <summary>
+        /// Takes in a string expression and replaces with the specified
+        /// value.Also replaces common constants such as pi, phi, e, etc.
+        /// to arbitrary precision.
+        /// </summary>
+        /// <param name="Exp"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static string ReplaceConstants(string Exp, double value = 0)
         {
-            /*
-             * Takes in a string expression and replaces with the specified
-             * value. Also replaces common constants such as pi, phi, e, etc.
-             * to arbitrary precision.
-             */
-
             Exp = Exp.Replace("x", value.ToString());
             Exp = Exp.Replace("pi", "3.14159");
             Exp = Exp.Replace("e", "2.71828");
             Exp = Exp.Replace("phi", "1.61703");
+            Exp = Exp.Replace("inf", (double.PositiveInfinity).ToString());
+            Exp = Exp.Replace("-inf", (double.NegativeInfinity).ToString());
             return Exp;
         }
+
+        /// <summary>
+        /// This function takes an analytic expression and determines
+        /// whether a "-" is a subtraction of two values or a negation
+        /// of one value. Replaces all negations with "~" instead of "-".
+        /// </summary>
+        /// <param name="Exp"></param>
+        /// <returns></returns>
         public static List<string> ReplaceNegatives(List<string> Exp)
         {
-            /*
-             * This function takes an analytic expression and determines
-             * whether a "-" is a subtraction of two values or a negation
-             * of one value. Replaces all negations with "~" instead of "-".
-             */
-
             //Deep clone list for constant length to iterate over
             List<string> ExpOut = new List<string>();
             ExpOut = DeepCloneList(Exp);
@@ -78,19 +118,18 @@ namespace Limit_Calculator
             return ExpOut;
         }
 
+        /// <summary>
+        /// Takes a string containing a function and converts it
+        /// to a list, where each element is either a number or
+        /// operator.
+        /// </summary>
+        /// <param name="Exp"></param>
+        /// <returns></returns>
         public static List<string> Convert2List(string Exp)
         {
-            /*
-             * Takes a string containing a function and converts it
-             * to a list, where each element is either a number or
-             * operator
-             */
-
             List<string> newExp = new List<string>();
             Queue<string> queue = new Queue<string>();
             int curInd = 0;
-
-            //Operator dictionary to define order of operations
 
             foreach (char token in Exp)
             {
@@ -175,13 +214,15 @@ namespace Limit_Calculator
             return newExp;
         }
 
+        /// <summary>
+        /// Takes an input queue and creates a deep
+        /// clone.This allows us to get a constant
+        /// length variable for iterating over.
+        /// </summary>
+        /// <param name="Exp"></param>
+        /// <returns></returns>
         private static Queue<string> DeepCloneQueue(Queue<string> Exp)
         {
-            /* Takes an input queue and creates a deep
-             * clone. This allows us to get a constant
-             * length variable for iterating over.
-             */
-
             //Temp queue
             Queue<string> newList = new Queue<string>();
 
@@ -194,13 +235,15 @@ namespace Limit_Calculator
             return newList;
         }
 
+        /// <summary>
+        /// Takes an input list and creates a deep
+        /// clone.This allows us to get a constant
+        /// length variable for iterating over.
+        /// </summary>
+        /// <param name="Exp"></param>
+        /// <returns></returns>
         private static List<string> DeepCloneList(List<string> Exp)
         {
-            /* Takes an input list and creates a deep
-             * clone. This allows us to get a constant
-             * length variable for iterating over.
-             */
-
             //Temp list
             List<string> newList = new List<string>();
 

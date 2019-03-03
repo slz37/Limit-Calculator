@@ -9,15 +9,16 @@ namespace Limit_Calculator
 {
     class Calculator
     {
+        /// <summary>
+        /// Converts a given infix expression to a postfix expression
+        /// to calculate the values used for testing convergence of
+        /// limits.
+        /// </summary>
+        /// <param name="infixExp"></param>
+        /// <returns></returns>
         public static double Convert2Postfix(string infixExp)
         {
-            /*
-             * Converts a given infix expression to a postfix expression
-             * to calculate the values used for testing convergence of
-             * limits
-             */
-
-            List<String> infixList = new List<string>();
+            List<string> infixList = new List<string>();
             double ans;
             string postfixExp = "";
             Stack<string> stack = new Stack<string>();
@@ -98,14 +99,15 @@ namespace Limit_Calculator
             return ans;
         }
 
+        /// <summary>
+        /// Takes a given postfix expression and evaluates it
+        /// and returns the value to the main program to test
+        /// for convergence.
+        /// </summary>
+        /// <param name="postfixExp"></param>
+        /// <returns></returns>
         public static double EvaluatePostFix(string postfixExp)
         {
-            /*
-             * Takes a given postfix expression and evaluates it
-             * and returns the value to the main program to test
-             * for convergence
-             */
-
             string x, y, ans;
             string[] postfixList = postfixExp.Split(null);
             Stack<string> stack = new Stack<string>();
@@ -150,13 +152,15 @@ namespace Limit_Calculator
             return double.Parse(ans);
         }
 
+        /// <summary>
+        /// Takes a function replaces variables with value, converts to postfix,
+        /// and evaluates the function.
+        /// </summary>
+        /// <param name="func"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static double Calculate(string func, double value)
         {
-            /*
-             * Takes a function replaces variables with value, converts to postfix,
-             * and evaluates the function
-             */
-
             double ans;
 
             //Replace and fill in any constant values

@@ -4,20 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
+using MathNet.Numerics;
 
 namespace Limit_Calculator
 {
     class LimitCalc
     {
+        /// <summary>
+        /// Calculates the limit as it approaches the value from both 
+        /// the left and right and averages between the two answers 
+        /// until either the x values get too close or the threshold
+        /// is reached.
+        /// </summary>
+        /// <param name="func"></param>
+        /// <param name="limit"></param>
+        /// <returns></returns>
         static double EvaluateLimit(string func, double limit)
         {
-            /*
-            * Calculates the limit as it approaches the value from both 
-            * the left and right and averages between the two answers 
-            * until either the x values get too close or the threshold
-            * is reached
-            */
-
             //Constants
             const double thresh = 1e-3;
             const double thresh_x = 1e-5;
@@ -32,6 +35,33 @@ namespace Limit_Calculator
             double del_x = Math.Abs(x_l - x_r);
             double ans = (left_ans + right_ans) / 2;
 
+            //Infinite limits
+            if (double.IsInfinity(limit))
+            {
+                //Deal with undefined fractions e.g. 1/inf with L'Hopital
+                if (double.IsNaN(ans))
+                {
+                    //Get index of first outer division symbol
+                    int index = StringFunctions.FindOuterSlash(func);
+
+                    //Split into numerator and denominator
+                    string num = func.Substring(0, index);
+                    string den = func.Substring(index + 1, func.Length - 2);
+
+                    //Take the derivate of the numerator and denominator
+                    string numDer = MathFunctions.Derivative(num);
+                    string denDer = MathFunctions.Derivative(den);
+
+                    string tot = numDer + "/" + denDer;
+
+                    return EvaluateLimit(tot, limit);
+                }
+                else
+                {
+                    return ans;
+                }
+            }
+
             //Loop until confident limit either converges or DNC
             while (true)
             {
@@ -42,7 +72,7 @@ namespace Limit_Calculator
                 }
                 if (del_x < thresh_x )
                 {
-                    return double.NaN;
+                    return double.PositiveInfinity;
                 }
 
                 //Step to next values
@@ -63,13 +93,15 @@ namespace Limit_Calculator
                 //Console.WriteLine(x_l + " " + x_r + " " + del_x + " " + left_ans + " " + right_ans + " " + del + " " + ans);
             }
         }
+
+        /// <summary>
+        /// Takes in user input for a function and a value to evaluate the limit at
+        /// and returns the value of the function if it converges or returns
+        /// "inf" if it diverges.
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
-            /*
-            * Takes in user input for a function and a value to evaluate the limit at
-            * and returns the value of the function if it converges or returns "Does
-            * not converge" if it diverges
-            */
             string func, limStr;
             double lim = 0, ans;
 
