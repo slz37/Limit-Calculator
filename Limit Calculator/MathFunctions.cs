@@ -51,12 +51,6 @@ namespace Limit_Calculator
             }
         }
 
-        static void Main2(string[] args)
-        {
-            Console.Write(Gamma(4.001));
-            Console.Read();
-        }
-
         private static double LanczosApprox(double n)
         {
             double y;
@@ -153,6 +147,8 @@ namespace Limit_Calculator
                 }
             }
 
+
+            //Calculate resulting values and add to new matrix
             for (int i = 0; i < N; i++)
             {
                 for (int j = 0; j < P; j++)
@@ -174,19 +170,11 @@ namespace Limit_Calculator
              * n and k
              */
 
-            if (k > n)
-            {
-                return 0;
-            }
-            else if ((n == 0) & (k == 0))
+            if ((n == 0) & (k == 0))
             {
                 return 1;
             }
-            else if (n == 0)
-            {
-                return 0;
-            }
-            else if (k < 0)
+            else if ((k > n) || (n == 0) || (k < 0))
             {
                 return 0;
             }

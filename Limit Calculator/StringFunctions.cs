@@ -27,7 +27,7 @@ namespace Limit_Calculator
             /*
              * This function takes an analytic expression and determines
              * whether a "-" is a subtraction of two values or a negation
-             * of one value. Replaces all negations with "!" instead of "-".
+             * of one value. Replaces all negations with "~" instead of "-".
              */
 
             //Deep clone list for constant length to iterate over
@@ -138,7 +138,7 @@ namespace Limit_Calculator
                      * and append operator to next index in list
                      */
 
-                    //Deep clone list for constant length to iterate over
+                    //Deep clone queue for constant length to iterate over
                     Queue<string> tempQueue = new Queue<string>();
                     tempQueue = DeepCloneQueue(queue);
                     int queueSize = tempQueue.Count();

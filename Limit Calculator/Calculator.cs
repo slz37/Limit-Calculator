@@ -102,7 +102,7 @@ namespace Limit_Calculator
         {
             /*
              * Takes a given postfix expression and evaluates it
-             * and returns the valueto the main program to test
+             * and returns the value to the main program to test
              * for convergence
              */
 
