@@ -30,16 +30,18 @@ namespace Limit_Calculator
                 if (operators.Any(p => p.Key == token))
                 {
                     string tempStr = "";
+                    //Derivatives of addition/subtraction
+                    if ((token == "+") || (token == "-"))
+                    {
+                        string B = stack.Pop();
+                        string A = stack.Pop();
 
-                    //Derivatives of addition
-                    if (token == "+")
-                    {
-                        //PLACEHOLDER
-                    }
-                    //Derivatives of subtraction
-                    else if (token == "-")
-                    {
-                        //PLACEHOLDER
+                        //(d/dx) A+B = dA/dx + dB/dx
+                        string derivativeB = EvaluateDerivative(B);
+                        string derivativeA = EvaluateDerivative(A);
+
+                        tempStr += derivativeA + token + derivativeB;
+                        stack.Push(tempStr);
                     }
                     //Derivatives of multiplication
                     else if (token == "*")
@@ -54,6 +56,7 @@ namespace Limit_Calculator
                     //Derivatives of exponents
                     else if (token == "^")
                     {
+                        //Need to move this down to EvaluateDerivative function
                         //Form of n^x
                         if (stack.Peek() == "x")
                         {
@@ -100,6 +103,30 @@ namespace Limit_Calculator
             }
 
             return funcDer;
+        }
+
+        /// <summary>
+        /// Takes a given expression and evaluates the
+        /// derivative of it.
+        /// </summary>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        private static string EvaluateDerivative(string func)
+        {
+            //Derivatives of constants
+            if (double.TryParse(func, out double result))
+            {
+                return "0";
+            }
+            //Derivates of x
+            else if (func == "x")
+            {
+                return "1";
+            }
+            else
+            {
+                return func;
+            }
         }
 
         /// <summary>

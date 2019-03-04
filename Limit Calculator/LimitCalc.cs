@@ -19,7 +19,7 @@ namespace Limit_Calculator
         /// <param name="func"></param>
         /// <param name="limit"></param>
         /// <returns></returns>
-        static double EvaluateLimit(string func, double limit)
+        public static double EvaluateLimit(string func, double limit)
         {
             //Constants
             const double thresh = 1e-3;

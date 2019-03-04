@@ -54,7 +54,7 @@ namespace Limit_Calculator
                 func = func.Replace(" ", "");
 
                 //Calculate limits and output answer
-                ans = EvaluateLimit(func, lim);
+                ans = LimitCalc.EvaluateLimit(func, lim);
                 Console.WriteLine("Limit as x->" + lim + " of " + func + " = " + Math.Round(ans, 3));
                 Console.ReadLine();
             }
@@ -62,12 +62,12 @@ namespace Limit_Calculator
             if (debugDerivative)
             {
                 //Code to test derivative method
-                string func2 = "(x^10)";
+                string func2 = "x^3-1";
                 string funcPostFix = Calculator.Convert2Postfix(func2);
                 string test = MathFunctions.Derivative(funcPostFix);
 
-                //Derivative of x^7 evaluated at 2, both outputs should be equal
-                Console.WriteLine(Calculator.Calculate("10*x^9", 2));
+                //Derivative of x^3-1 evaluated at 2, both outputs should be equal
+                Console.WriteLine(Calculator.Calculate("12", 2));
                 Console.WriteLine(Calculator.Calculate(test, 2));
                 Console.ReadLine();
             }

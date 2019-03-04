@@ -44,7 +44,7 @@ namespace Limit_Calculator
 
         /// <summary>
         /// Takes in a string expression and replaces with the specified
-        /// value.Also replaces common constants such as pi, phi, e, etc.
+        /// value. Also replaces common constants such as pi, phi, e, etc.
         /// to arbitrary precision.
         /// </summary>
         /// <param name="Exp"></param>
@@ -211,12 +211,18 @@ namespace Limit_Calculator
                 curInd += 1;
             }
 
+            //If there's any residuals in queue, remove them
+            while (queue.Count > 0)
+            {
+                newExp.Add(queue.Dequeue());
+            }
+
             return newExp;
         }
 
         /// <summary>
         /// Takes an input queue and creates a deep
-        /// clone.This allows us to get a constant
+        /// clone. This allows us to get a constant
         /// length variable for iterating over.
         /// </summary>
         /// <param name="Exp"></param>
@@ -237,7 +243,7 @@ namespace Limit_Calculator
 
         /// <summary>
         /// Takes an input list and creates a deep
-        /// clone.This allows us to get a constant
+        /// clone. This allows us to get a constant
         /// length variable for iterating over.
         /// </summary>
         /// <param name="Exp"></param>
