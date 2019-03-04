@@ -62,7 +62,7 @@ namespace Limit_Calculator
             if (debugDerivative)
             {
                 //Code to test derivative method
-                string func2 = "x^3-1";
+                string func2 = "(x+2)^2";
                 string funcPostFix = Calculator.Convert2Postfix(func2);
                 string test = MathFunctions.Derivative(funcPostFix);
 

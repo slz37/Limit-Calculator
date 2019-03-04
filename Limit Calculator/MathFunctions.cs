@@ -20,79 +20,50 @@ namespace Limit_Calculator
             string[] postfixList = func.Split(null);
             string funcDer = "";
 
-            //Operator dictionary
-            Dictionary<string, int> operators = new Dictionary<string, int>();
-            OperatorFunctions.Operators(operators);
+            //Operator lists for different number of operands
+            List<string> unaryOperators = new List<string>();
+            List<string> binaryOperators = new List<string>();
+            OperatorFunctions.UnaryOperators(unaryOperators);
+            OperatorFunctions.BinaryOperators(binaryOperators);
+
+            //Reverse array to do derivatives outside -> in
+            Array.Reverse(postfixList);
 
             //Loop over all elements of the postfix expression
-            foreach (string token in postfixList)
+            for (int i = 0; i < postfixList.Length; i++)
             {
-                if (operators.Any(p => p.Key == token))
+                string token = postfixList[i];
+                //Derivatives of binary operators
+                if (binaryOperators.Any(token.Contains))
                 {
-                    string tempStr = "";
-                    //Derivatives of addition/subtraction
-                    if ((token == "+") || (token == "-"))
-                    {
-                        string B = stack.Pop();
-                        string A = stack.Pop();
+                    string B = postfixList[i + 1];
+                    string A = postfixList[i + 2];
 
-                        //(d/dx) A+B = dA/dx + dB/dx
-                        string derivativeB = EvaluateDerivative(B);
-                        string derivativeA = EvaluateDerivative(A);
+                    string derivative = EvaluateDerivative(A, B, token);
+                    stack.Push(derivative);
 
-                        tempStr += derivativeA + token + derivativeB;
-                        stack.Push(tempStr);
-                    }
-                    //Derivatives of multiplication
-                    else if (token == "*")
-                    {
-                        //PLACEHOLDER
-                    }
-                    //Derivatives of division
-                    else if (token == "/")
-                    {
-                        //PLACEHOLDER
-                    }
-                    //Derivatives of exponents
-                    else if (token == "^")
-                    {
-                        //Need to move this down to EvaluateDerivative function
-                        //Form of n^x
-                        if (stack.Peek() == "x")
-                        {
-                            string variable = stack.Pop();
-                            string digit = stack.Pop();
+                    i += 2;
+                }
+                //Derivatives of unary operators
+                else if (unaryOperators.Any(token.Contains))
+                {
+                    string A = "";
+                    string B = postfixList[i + 1];
 
-                            //Actually x^x
-                            if (digit == "x")
-                            {
-                                //(d/dx) x^x = x^x*(ln(x)+1)
-                                tempStr += variable + token + variable + "*" + "(ln(" + variable + ")+1";
-                                stack.Push(tempStr);
-                            }
-                            else
-                            {
-                                //(d/dx) n^x = n^x * ln(n)
-                                tempStr += digit + token + variable + "*" + "ln(" + digit + ")";
-                                stack.Push(tempStr);
-                            }
-                        }
-                        //Form of x^n
-                        else
-                        {
-                            string digit = stack.Pop();
-                            double digitDec = double.Parse(digit) - 1;
-                            string variable = stack.Pop();
-
-                            //(d/dx) x^n = n*x^(n-1)
-                            tempStr += digit + "*" + variable + token + "(" + digitDec + ")";
-                            stack.Push(tempStr);
-                        }
+                    //Create string of the rest of the array
+                    for (int j = i + 1; j < postfixList.Length; j++)
+                    {
+                        A += postfixList[j];
                     }
+
+                    string derivative = EvaluateDerivative(A, B, token);
+                    stack.Push(derivative);
+
+                    i++;
                 }
                 else
                 {
-                    stack.Push(token);
+                    continue;
                 }
             }
 
@@ -111,21 +82,51 @@ namespace Limit_Calculator
         /// </summary>
         /// <param name="func"></param>
         /// <returns></returns>
-        private static string EvaluateDerivative(string func)
+        private static string EvaluateDerivative(string A, string B, string token)
         {
             //Derivatives of constants
-            if (double.TryParse(func, out double result))
+            if (token == "const")
             {
                 return "0";
             }
             //Derivates of x
-            else if (func == "x")
+            else if (token == "x")
             {
                 return "1";
             }
+            else if ((token == "+") || (token == "-"))
+            {
+                return EvaluateDerivative(A, "temp", "const") + token + EvaluateDerivative(B, "temp", "const");
+            }
+            else if (token.Contains("^"))
+            {
+                //Form of n^x
+                if (B == "x")
+                {
+                    //Actually x^x
+                    if (A == "x")
+                    {
+                        //(d/dx) x^x = x^x*(ln(x)+1)
+                        return A + token + A + "*" + "(ln(" + A + ")+1";
+                    }
+                    else
+                    {
+                        //(d/dx) n^x = n^x * ln(n)
+                        return B + token + A + "*" + "ln(" + B + ")";
+                    }
+                }
+                //Form of x^n
+                else
+                {
+                    double digitDec = double.Parse(B) - 1;
+
+                    //(d/dx) x^n = n*x^(n-1)
+                    return B + "*" + A + token + "(" + digitDec + ")";
+                }
+            }
             else
             {
-                return func;
+                return A;
             }
         }
 
