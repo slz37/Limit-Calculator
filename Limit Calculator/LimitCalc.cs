@@ -144,20 +144,5 @@ namespace Limit_Calculator
                 Console.ReadLine();
             }
         }
-
-        /// <summary>
-        /// Test function for calculating the derivative
-        /// of a postfix expression.
-        /// </summary>
-        /// <param name="args"></param>
-        static void Main(string[] args)
-        {
-            string func = "(x^7+2*x)";
-            string funcPostFix = Calculator.Convert2Postfix(func);
-            string test = MathFunctions.Derivative(funcPostFix);
-
-            Console.WriteLine(test);
-            Console.ReadLine();
-        }
     }
 }

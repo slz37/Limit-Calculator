@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calculator.cs" />
+    <Compile Include="Test.cs" />
     <Compile Include="DeprecatedCode.cs" />
     <Compile Include="LanczosCoefficients.cs" />
     <Compile Include="MathFunctions.cs" />

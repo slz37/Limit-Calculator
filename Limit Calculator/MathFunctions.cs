@@ -16,8 +16,90 @@ namespace Limit_Calculator
         /// <returns></returns>
         public static string Derivative(string func)
         {
+            Stack<string> stack = new Stack<string>();
+            string[] postfixList = func.Split(null);
+            string funcDer = "";
 
-            return func;
+            //Operator dictionary
+            Dictionary<string, int> operators = new Dictionary<string, int>();
+            OperatorFunctions.Operators(operators);
+
+            //Loop over all elements of the postfix expression
+            foreach (string token in postfixList)
+            {
+                if (operators.Any(p => p.Key == token))
+                {
+                    string tempStr = "";
+
+                    //Derivatives of addition
+                    if (token == "+")
+                    {
+                        //PLACEHOLDER
+                    }
+                    //Derivatives of subtraction
+                    else if (token == "-")
+                    {
+                        //PLACEHOLDER
+                    }
+                    //Derivatives of multiplication
+                    else if (token == "*")
+                    {
+                        //PLACEHOLDER
+                    }
+                    //Derivatives of division
+                    else if (token == "/")
+                    {
+                        //PLACEHOLDER
+                    }
+                    //Derivatives of exponents
+                    else if (token == "^")
+                    {
+                        //Form of n^x
+                        if (stack.Peek() == "x")
+                        {
+                            string variable = stack.Pop();
+                            string digit = stack.Pop();
+
+                            //Actually x^x
+                            if (digit == "x")
+                            {
+                                //(d/dx) x^x = x^x*(ln(x)+1)
+                                tempStr += variable + token + variable + "*" + "(ln(" + variable + ")+1";
+                                stack.Push(tempStr);
+                            }
+                            else
+                            {
+                                //(d/dx) n^x = n^x * ln(n)
+                                tempStr += digit + token + variable + "*" + "ln(" + digit + ")";
+                                stack.Push(tempStr);
+                            }
+                        }
+                        //Form of x^n
+                        else
+                        {
+                            string digit = stack.Pop();
+                            double digitDec = double.Parse(digit) - 1;
+                            string variable = stack.Pop();
+
+                            //(d/dx) x^n = n*x^(n-1)
+                            tempStr += digit + "*" + variable + token + "(" + digitDec + ")";
+                            stack.Push(tempStr);
+                        }
+                    }
+                }
+                else
+                {
+                    stack.Push(token);
+                }
+            }
+
+            //Clear stack now that we're done
+            while (stack.Count > 0)
+            {
+                funcDer += stack.Pop();
+            }
+
+            return funcDer;
         }
 
         /// <summary>
