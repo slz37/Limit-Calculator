@@ -102,7 +102,7 @@ namespace Limit_Calculator
         /// <param name="args"></param>
         static void Main2(string[] args)
         {
-            string func, limStr;
+            string func, limStr, limPostFix;
             double lim = 0, ans;
 
             //Operator dictionary to define order of operations
@@ -126,7 +126,8 @@ namespace Limit_Calculator
                 if (limList.Any(operators.ContainsKey))
                 {
                     limStr = StringFunctions.ReplaceConstants(limStr);
-                    lim = Calculator.Convert2Postfix(limStr);
+                    limPostFix = Calculator.Convert2Postfix(limStr);
+                    lim = Calculator.EvaluatePostFix(limPostFix);
                 }
                 else
                 {
@@ -144,11 +145,16 @@ namespace Limit_Calculator
             }
         }
 
+        /// <summary>
+        /// Test function for calculating the derivative
+        /// of a postfix expression.
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
-            //Works for x^7, gets to 7x^6 before it breaks
             string func = "(x^7+2*x)";
-            string test = MathFunctions.Derivative(func);
+            string funcPostFix = Calculator.Convert2Postfix(func);
+            string test = MathFunctions.Derivative(funcPostFix);
 
             Console.WriteLine(test);
             Console.ReadLine();

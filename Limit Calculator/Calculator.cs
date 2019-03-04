@@ -16,10 +16,9 @@ namespace Limit_Calculator
         /// </summary>
         /// <param name="infixExp"></param>
         /// <returns></returns>
-        public static double Convert2Postfix(string infixExp)
+        public static string Convert2Postfix(string infixExp)
         {
             List<string> infixList = new List<string>();
-            double ans;
             string postfixExp = "";
             Stack<string> stack = new Stack<string>();
             stack.Push("(");
@@ -95,8 +94,7 @@ namespace Limit_Calculator
                 }
             }
 
-            ans = EvaluatePostFix(postfixExp);
-            return ans;
+            return postfixExp;
         }
 
         /// <summary>
@@ -112,16 +110,16 @@ namespace Limit_Calculator
             string[] postfixList = postfixExp.Split(null);
             Stack<string> stack = new Stack<string>();
 
-            //Operator dictionary to define order of operations
-            Dictionary<string, int> operators = new Dictionary<string, int>();
-            List<string> singleVarFuncs = new List<string>();
-            OperatorFunctions.Operators(operators);
-            OperatorFunctions.SingleVariableFuncs(singleVarFuncs);
+            //Operator lists for different number of operands
+            List<string> unaryOperators = new List<string>();
+            List<string> binaryOperators = new List<string>();
+            OperatorFunctions.UnaryOperators(unaryOperators);
+            OperatorFunctions.BinaryOperators(binaryOperators);
 
             //Iterate over all tokens in postfix expression
             foreach (string token in postfixList)
             {
-                if ((operators.Any(p => p.Key == token)) & !singleVarFuncs.Any(token.Contains))
+                if (binaryOperators.Any(token.Contains))
                 {
                     //Evaluate functions that take two arguments
                     y = stack.Pop();
@@ -131,7 +129,7 @@ namespace Limit_Calculator
 
                     stack.Push(ans);
                 }
-                else if (singleVarFuncs.Any(token.Contains))
+                else if (unaryOperators.Any(token.Contains))
                 {
                     //Evaluate functions that only take a single argument
                     x = "temp";
@@ -162,11 +160,15 @@ namespace Limit_Calculator
         public static double Calculate(string func, double value)
         {
             double ans;
+            string postFixExp;
 
             //Replace and fill in any constant values
             string analytic_func = StringFunctions.ReplaceConstants(func, value);
 
-            ans = Convert2Postfix(analytic_func);
+            //Convert to postfix and then evaluate
+            postFixExp = Convert2Postfix(analytic_func);
+            ans = EvaluatePostFix(postFixExp);
+
             return ans;
         }
     }

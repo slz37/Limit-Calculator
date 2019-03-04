@@ -64,6 +64,18 @@ namespace Limit_Calculator
             {
                 return Math.Atan(double.Parse(b));
             }
+            else if (op == "cot")
+            {
+                return 1 / Math.Tan(double.Parse(b));
+            }
+            else if (op == "sec")
+            {
+                return 1 / Math.Cos(double.Parse(b));
+            }
+            else if (op == "csc")
+            {
+                return 1 / Math.Sin(double.Parse(b));
+            }
             else if (op == "~")
             {
                 return double.Parse("-" + b);
@@ -104,19 +116,39 @@ namespace Limit_Calculator
         /// we will only pop the top value for these functions.
         /// </summary>
         /// <param name="singleVarFuncs"></param>
-        public static void SingleVariableFuncs(List<string> singleVarFuncs)
+        public static void UnaryOperators(List<string> unaryOperators)
         {
-            singleVarFuncs.Add("abs");
-            singleVarFuncs.Add("ln");
-            singleVarFuncs.Add("sqrt");
-            singleVarFuncs.Add("!");
-            singleVarFuncs.Add("~");
-            singleVarFuncs.Add("cos");
-            singleVarFuncs.Add("sin");
-            singleVarFuncs.Add("tan");
-            singleVarFuncs.Add("arccos");
-            singleVarFuncs.Add("arcsin");
-            singleVarFuncs.Add("arctan");
+            unaryOperators.Add("log");
+            unaryOperators.Add("abs");
+            unaryOperators.Add("ln");
+            unaryOperators.Add("sqrt");
+            unaryOperators.Add("!");
+            unaryOperators.Add("~");
+            unaryOperators.Add("cos");
+            unaryOperators.Add("sin");
+            unaryOperators.Add("tan");
+            unaryOperators.Add("arccos");
+            unaryOperators.Add("arcsin");
+            unaryOperators.Add("arctan");
+            unaryOperators.Add("cot");
+            unaryOperators.Add("sec");
+            unaryOperators.Add("csc");
+        }
+
+        /// <summary>
+        /// Adds operators that are functions(+, -, *, etc.) to
+        /// a list so that when we evaluate the postfix expression,
+        /// we will use two operands.
+        /// </summary>
+        /// <param name="singleVarFuncs"></param>
+        public static void BinaryOperators(List<string> binaryOperators)
+        {
+            binaryOperators.Add("^");
+            binaryOperators.Add("*");
+            binaryOperators.Add("/");
+            binaryOperators.Add("%");
+            binaryOperators.Add("+");
+            binaryOperators.Add("-");
         }
 
         /// <summary>
@@ -139,6 +171,9 @@ namespace Limit_Calculator
             operators.Add("arccos", 4);
             operators.Add("arcsin", 4);
             operators.Add("arctan", 4);
+            operators.Add("cot", 4);
+            operators.Add("sec", 4);
+            operators.Add("csc", 4);
             operators.Add("^", 3);
             operators.Add("*", 2);
             operators.Add("/", 2);

@@ -9,150 +9,15 @@ namespace Limit_Calculator
     class MathFunctions
     {
         /// <summary>
-        /// Takes in a string of an expression and splits
-        /// it up to feed into the derivative function
-        /// to properly calculate derivatives.
+        /// Takes in a given postfix expression and
+        /// calculates the derivative of it.
         /// </summary>
-        /// <param name="func"></param>
+        /// <param name=""></param>
         /// <returns></returns>
         public static string Derivative(string func)
         {
-            string funcDer = "";
-            Queue<string> queue = new Queue<string>();
 
-            //Base Operator
-            string[] baseOperators = {"+", "-"};
-
-            //Iterate over all chars in the string
-            foreach (char item in func)
-            {
-                string token = item.ToString();
-                if (token == "(")
-                {
-                    queue.Enqueue(token);
-                }
-                else if (token == ")")
-                {
-                    string tempStr = "";
-
-                    //Get all items in stack up to first "(" or base operator
-                    while (queue.Count > 0)
-                    {
-                        if ((queue.Peek() != "(") || (baseOperators.Contains(queue.Peek())))
-                        {
-                            tempStr += queue.Dequeue();
-                        }
-                    }
-
-                    //Take derivative and then put it back onto stack with operator
-                    queue.Enqueue(EvalDerivative(tempStr));
-                    queue.Enqueue(token);
-                }
-                else if (baseOperators.Contains(token))
-                {
-                    string tempStr = "";
-
-                    //Get all items in stack up to first "("
-                    while (queue.Count > 0)
-                    {
-                        if (queue.Peek() != "(")
-                        {
-                            tempStr += queue.Dequeue();
-                        }
-                        else
-                        {
-                            queue.Dequeue();
-                        }
-                    }
-
-                    //Take derivative and then put it back onto stack with operator
-                    queue.Enqueue(EvalDerivative(tempStr));
-                    queue.Enqueue(token);
-                }
-                else
-                {
-                    queue.Enqueue(token);
-                }
-            }
-
-            //Now clear stack and put it all together
-            while (queue.Count > 0)
-            {
-                funcDer += queue.Dequeue();
-            }
-
-            return funcDer;
-        }
-
-        /// <summary>
-        /// Calculates the symbolic derivative of the input function.
-        /// </summary>
-        /// <param name="func"></param>
-        /// <returns></returns>
-        public static string EvalDerivative(string func)
-        {
-            /*
-             * Gonna need a stack of some sort
-             * Probably split recursively on each
-             * operator level then calculate derivative
-             * and bring it all together
-             */
-            string tempStr = "";
-            Stack<string> stack = new Stack<string>();
-            Queue<string> queue = new Queue<string>();
-
-            Dictionary<string, int> operators = new Dictionary<string, int>();
-            OperatorFunctions.Operators(operators);
-
-            //Iterate over all char in string
-            for (int i = 0; i < func.Length; i++)
-            {
-                string token = func[i].ToString();
-
-                //Once operator reached, perform derivative
-                if (stack.Count > 0)
-                {
-                    if (!(operators.ContainsKey(token)))
-                    {
-                        stack.Push(token);
-                        queue.Enqueue(token);
-                        continue;
-                    }
-                    else
-                    {
-                        //Take the derivative of the operator
-                        if (token == "^")
-                        {
-                            queue.Enqueue(token);
-                            stack.Push(token);
-
-                            //Decrease digit by 1
-                            string nextToken = func[i + 1].ToString();
-                            string digit = (double.Parse(nextToken) - 1).ToString();
-
-                            tempStr += nextToken;
-
-                            //Clear queue/stack
-                            while (stack.Count > 0)
-                            {
-                                stack.Pop();
-                                tempStr += queue.Dequeue();
-                            }
-
-                            //Skip next token
-                            tempStr += digit;
-                            i++;
-                        }
-                    }
-                }
-                else
-                {
-                    queue.Enqueue(token);
-                    stack.Push(token);
-                }
-            }
-
-            return tempStr;
+            return func;
         }
 
         /// <summary>
