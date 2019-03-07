@@ -62,12 +62,12 @@ namespace Limit_Calculator
             if (debugDerivative)
             {
                 //Code to test derivative method
-                string func2 = "(x+2)^2";
+                string func2 = "2+(x+2)^2+2^x";
                 string funcPostFix = Calculator.Convert2Postfix(func2);
-                string test = MathFunctions.Derivative(funcPostFix);
+                string test = DerivativeCalculator.Derivative(funcPostFix);
 
-                //Derivative of x^3-1 evaluated at 2, both outputs should be equal
-                Console.WriteLine(Calculator.Calculate("12", 2));
+                //Derivative of 2+(x+2)^2+2^x evaluated at 2, both outputs should be equal
+                Console.WriteLine(Calculator.Calculate("2*(x+2)+(2^x*ln(2))", 2));
                 Console.WriteLine(Calculator.Calculate(test, 2));
                 Console.ReadLine();
             }

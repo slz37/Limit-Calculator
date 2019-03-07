@@ -18,20 +18,20 @@ namespace Limit_Calculator
         public static int FindOuterSlash(string func)
         {
             int index = 0;
-            Stack<char> stack = new Stack<char>();
+            Stack<char> tokenStack = new Stack<char>();
 
             //Iterate over everything in string
             foreach (char token in func)
             {
                 if (token == '(')
                 {
-                    stack.Push(token);
+                    tokenStack.Push(token);
                 }
                 else if (token == ')')
                 {
-                    stack.Pop();
+                    tokenStack.Pop();
                 }
-                else if ((token == '/') & (stack.Count == 0))
+                else if ((token == '/') & (tokenStack.Count == 0))
                 {
                     break;
                 }
@@ -128,7 +128,7 @@ namespace Limit_Calculator
         public static List<string> Convert2List(string Exp)
         {
             List<string> newExp = new List<string>();
-            Queue<string> queue = new Queue<string>();
+            Queue<string> tokenQueue = new Queue<string>();
             int curInd = 0;
 
             foreach (char token in Exp)
@@ -137,7 +137,7 @@ namespace Limit_Calculator
                 {
                     //Deep clone list for constant length to iterate over
                     Queue<string> tempQueue = new Queue<string>();
-                    tempQueue = DeepCloneQueue(queue);
+                    tempQueue = DeepCloneQueue(tokenQueue);
                     int queueSize = tempQueue.Count();
 
                     //If last digit, clear queue and add to list, else add to queue
@@ -149,7 +149,7 @@ namespace Limit_Calculator
                             string tempStr = "";
                             for (int i = 0; i < queueSize; i++)
                             {
-                                tempStr += queue.Dequeue();
+                                tempStr += tokenQueue.Dequeue();
                             }
                             tempStr += token.ToString();
                             newExp.Add(tempStr);
@@ -164,25 +164,25 @@ namespace Limit_Calculator
                         //If operator in queue clear the first
                         if (queueSize != 0)
                         {
-                            if (char.IsLetter(char.Parse(queue.Peek())))
+                            if (char.IsLetter(char.Parse(tokenQueue.Peek())))
                             {
                                 string tempStr = "";
                                 for (int i = 0; i < queueSize; i++)
                                 {
-                                    tempStr += queue.Dequeue();
+                                    tempStr += tokenQueue.Dequeue();
                                 }
                                 newExp.Add(tempStr);
                             }
                         }
 
                         //Not last digit, so just add it to the queue
-                        queue.Enqueue(token.ToString());
+                        tokenQueue.Enqueue(token.ToString());
                     }
                 }
                 else if (char.IsLetter(token))
                 {
                     //If token is a letter, push to queue to complete word
-                    queue.Enqueue(token.ToString());
+                    tokenQueue.Enqueue(token.ToString());
                 }
                 else
                 {
@@ -193,7 +193,7 @@ namespace Limit_Calculator
 
                     //Deep clone queue for constant length to iterate over
                     Queue<string> tempQueue = new Queue<string>();
-                    tempQueue = DeepCloneQueue(queue);
+                    tempQueue = DeepCloneQueue(tokenQueue);
                     int queueSize = tempQueue.Count();
 
                     //Clear queue and add full number to list, then add operator to list
@@ -202,7 +202,7 @@ namespace Limit_Calculator
                         string tempStr = "";
                         for (int i = 0; i < queueSize; i++)
                         {
-                            tempStr += queue.Dequeue();
+                            tempStr += tokenQueue.Dequeue();
                         }
                         newExp.Add(tempStr);
                     }
@@ -212,9 +212,9 @@ namespace Limit_Calculator
             }
 
             //If there's any residuals in queue, remove them
-            while (queue.Count > 0)
+            while (tokenQueue.Count > 0)
             {
-                newExp.Add(queue.Dequeue());
+                newExp.Add(tokenQueue.Dequeue());
             }
 
             return newExp;
@@ -230,15 +230,15 @@ namespace Limit_Calculator
         private static Queue<string> DeepCloneQueue(Queue<string> Exp)
         {
             //Temp queue
-            Queue<string> newList = new Queue<string>();
+            Queue<string> newQueue = new Queue<string>();
 
             //Clone elements of old queue to new list
             foreach (string element in Exp)
             {
-                newList.Enqueue((string)element.Clone());
+                newQueue.Enqueue((string)element.Clone());
             }
 
-            return newList;
+            return newQueue;
         }
 
         /// <summary>

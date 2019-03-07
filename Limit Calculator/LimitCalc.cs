@@ -49,8 +49,8 @@ namespace Limit_Calculator
                     string den = func.Substring(index + 1, func.Length - 2);
 
                     //Take the derivate of the numerator and denominator
-                    string numDer = MathFunctions.Derivative(num);
-                    string denDer = MathFunctions.Derivative(den);
+                    string numDer = DerivativeCalculator.Derivative(num);
+                    string denDer = DerivativeCalculator.Derivative(den);
 
                     string tot = numDer + "/" + denDer;
 

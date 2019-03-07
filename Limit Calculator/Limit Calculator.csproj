@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calculator.cs" />
+    <Compile Include="DerivativeCalculator.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="DeprecatedCode.cs" />
     <Compile Include="LanczosCoefficients.cs" />
@@ -60,7 +61,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

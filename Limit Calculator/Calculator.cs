@@ -20,8 +20,8 @@ namespace Limit_Calculator
         {
             List<string> infixList = new List<string>();
             string postfixExp = "";
-            Stack<string> stack = new Stack<string>();
-            stack.Push("(");
+            Stack<string> tokenStack = new Stack<string>();
+            tokenStack.Push("(");
 
             //Operator dictionary to define order of operations
             Dictionary<string, int> operators = new Dictionary<string, int>();
@@ -37,7 +37,7 @@ namespace Limit_Calculator
             {
                 if (token == "(")
                 {
-                    stack.Push(token);
+                    tokenStack.Push(token);
                 }
                 else if (token == ")")
                 {
@@ -45,16 +45,16 @@ namespace Limit_Calculator
                      * Add operators to string until left paren reached,
                      * then pop left paren
                      */
-                    for (int i = 0; i <= stack.Count(); i++)
+                    for (int i = 0; i <= tokenStack.Count(); i++)
                     {
-                        if (stack.Peek() == "(")
+                        if (tokenStack.Peek() == "(")
                         {
-                            stack.Pop();
+                            tokenStack.Pop();
                             break;
                         }
                         else
                         {
-                            postfixExp += " " + stack.Pop();
+                            postfixExp += " " + tokenStack.Pop();
                         }
                     }
                 }
@@ -64,18 +64,18 @@ namespace Limit_Calculator
                      * Add operators in stack >= current operator to string,
                      * then push current operator to stack
                      */
-                     for (int i = 0; i <= stack.Count(); i++)
+                     for (int i = 0; i <= tokenStack.Count(); i++)
                     {
-                        if (stack.Peek() == "(")
+                        if (tokenStack.Peek() == "(")
                         {
                             break;
                         }
-                        else if (operators[stack.Peek()] >= operators[token])
+                        else if (operators[tokenStack.Peek()] >= operators[token])
                         {
-                            postfixExp += " " + stack.Pop();
+                            postfixExp += " " + tokenStack.Pop();
                         }
                     }
-                    stack.Push(token);
+                    tokenStack.Push(token);
                 }
                 else
                 {
@@ -107,8 +107,8 @@ namespace Limit_Calculator
         public static double EvaluatePostFix(string postfixExp)
         {
             string x, y, ans;
-            string[] postfixList = postfixExp.Split(null);
-            Stack<string> stack = new Stack<string>();
+            string[] postfixArray = postfixExp.Split(null);
+            Stack<string> tokenStack = new Stack<string>();
 
             //Operator lists for different number of operands
             List<string> unaryOperators = new List<string>();
@@ -117,36 +117,36 @@ namespace Limit_Calculator
             OperatorFunctions.BinaryOperators(binaryOperators);
 
             //Iterate over all tokens in postfix expression
-            foreach (string token in postfixList)
+            foreach (string token in postfixArray)
             {
                 if (binaryOperators.Any(token.Contains))
                 {
                     //Evaluate functions that take two arguments
-                    y = stack.Pop();
-                    x = stack.Pop();
+                    y = tokenStack.Pop();
+                    x = tokenStack.Pop();
 
                     ans = OperatorFunctions.EvaluateExp(x, y, token).ToString();
 
-                    stack.Push(ans);
+                    tokenStack.Push(ans);
                 }
                 else if (unaryOperators.Any(token.Contains))
                 {
                     //Evaluate functions that only take a single argument
                     x = "temp";
-                    y = stack.Pop();
+                    y = tokenStack.Pop();
 
                     ans = OperatorFunctions.EvaluateExp(x, y, token).ToString();
 
-                    stack.Push(ans);
+                    tokenStack.Push(ans);
                 }
                 else
                 {
-                    stack.Push(token);
+                    tokenStack.Push(token);
                 }
             }
 
             //Last thing on stack is the answer
-            ans = stack.Pop();
+            ans = tokenStack.Pop();
             return double.Parse(ans);
         }
 
