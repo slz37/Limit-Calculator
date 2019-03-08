@@ -261,5 +261,14 @@ namespace Limit_Calculator
 
             return newList;
         }
+
+        public static string ReverseString(string Exp)
+        {
+            //Convert to array and reverse
+            char[] charArray = Exp.ToCharArray();
+            Array.Reverse(charArray);
+
+            return new string(charArray);
+        }
     }
 }

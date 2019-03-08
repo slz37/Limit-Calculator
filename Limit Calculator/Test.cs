@@ -15,15 +15,15 @@ namespace Limit_Calculator
         /// <param name="args"></param>
         static void Main(string[] args)
         {
+            //Debug flags
             bool debugLimit = false;
             bool debugDerivative = true;
+            bool debugIsComplete = false;
 
             if (debugLimit)
             {
-                //Code to test limit method
                 string func, limStr, limPostFix;
                 double lim = 0, ans;
-
 
                 //Operator dictionary to define order of operations
                 Dictionary<string, int> operators = new Dictionary<string, int>();
@@ -56,12 +56,12 @@ namespace Limit_Calculator
                 //Calculate limits and output answer
                 ans = LimitCalc.EvaluateLimit(func, lim);
                 Console.WriteLine("Limit as x->" + lim + " of " + func + " = " + Math.Round(ans, 3));
+                Console.WriteLine("Answer from Wolfram: " + 3.166983673);
                 Console.ReadLine();
             }
 
             if (debugDerivative)
             {
-                //Code to test derivative method
                 string func2 = "2+(x+2)^2+2^x";
                 string funcPostFix = Calculator.Convert2Postfix(func2);
                 string test = DerivativeCalculator.Derivative(funcPostFix);
@@ -70,6 +70,18 @@ namespace Limit_Calculator
                 Console.WriteLine(Calculator.Calculate("2*(x+2)+(2^x*ln(2))", 2));
                 Console.WriteLine(Calculator.Calculate(test, 2));
                 Console.ReadLine();
+            }
+            
+            if (debugIsComplete)
+            {
+                string func = "^ x 2";
+                string funcRev = StringFunctions.ReverseString(func);
+                string funcEval = StringFunctions.ReplaceConstants(funcRev, Math.Tan(2 + Math.Exp(10)) + Math.PI);
+
+                //Console should show the value it evaluates to
+                Console.WriteLine(Calculator.EvaluatePostFix(funcEval));
+                Console.WriteLine(DerivativeCalculator.IsComplete(func));
+                Console.Read();
             }
         }
     }

@@ -100,7 +100,7 @@ namespace Limit_Calculator
         /// "inf" if it diverges.
         /// </summary>
         /// <param name="args"></param>
-        static void Main2(string[] args)
+        public static void Main2(string[] args)
         {
             string func, limStr, limPostFix;
             double lim = 0, ans;
