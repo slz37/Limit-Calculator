@@ -282,7 +282,7 @@ namespace Limit_Calculator
                     }
                     else
                     {
-                        //Array to list and reverse
+                        //Convert to infix
                         string stringB = Calculator.Convert2Infix(B);
                         return "(" + CompleteExpressions(B) + token + A[0] + "+" + tempA + token + stringB + ")";
                     }
@@ -299,6 +299,39 @@ namespace Limit_Calculator
                     string stringA = Calculator.Convert2Infix(A);
                     string stringB = Calculator.Convert2Infix(B);
                     return "(" + stringB + token + CompleteExpressions(A) + "+" + stringA + token + CompleteExpressions(B) + ")";
+                }
+            }
+            else if (token == "/")
+            {
+                //Call derivatives again if not done
+                if (!String.IsNullOrEmpty(tempA))
+                {
+                    if (!String.IsNullOrEmpty(tempB))
+                    {
+                        return "(" + "(" + B[0] + "*" + tempA + "-" + A[0] + "*" + tempB + ")" + token + "(" + B[0] + "*" + B[0] + ")" + ")";
+                    }
+                    else
+                    {
+                        //Convert to infix
+                        string stringB = Calculator.Convert2Infix(B);
+                        return "(" + "(" + stringB + "*" + tempA + "-" + A[0] + "*" + CompleteExpressions(B) + 
+                                ")" + token + "(" + stringB + "*" + stringB + ")" + ")";
+                    }
+                }
+                else if (!String.IsNullOrEmpty(tempB))
+                {
+                    //Convert to infix
+                    string stringA = Calculator.Convert2Infix(A);
+                    return "(" + "(" + B[0] + "*" + CompleteExpressions(A) + "-" + stringA + "*" + tempB + ")" + 
+                            token + "(" + B[0] + "*" + B[0] + ")" + ")";
+                }
+                else
+                {
+                    //Convert to infix
+                    string stringA = Calculator.Convert2Infix(A);
+                    string stringB = Calculator.Convert2Infix(B);
+                    return "(" + "(" + stringB + "*" + CompleteExpressions(A) + "-" + stringA + "*" + CompleteExpressions(B) + ")" +
+                            token + "(" + stringB + "*" + stringB + ")" + ")";
                 }
             }
             /*

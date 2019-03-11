@@ -96,7 +96,7 @@ namespace Limit_Calculator
                     //Case -a + b
                     ExpOut[i] = "~";
                 }
-                if ((ExpOut[i] == "-") & (ExpOut[i + 1] == "("))
+                if ((ExpOut[i] == "-") & (ExpOut[i + 1] == "(") & (i == 0))
                 {
                     //Case -(a + b)
                     ExpOut[i] = "~";

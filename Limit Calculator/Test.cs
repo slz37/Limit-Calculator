@@ -63,12 +63,12 @@ namespace Limit_Calculator
 
             if (debugDerivative)
             {
-                string func = "(2+x)*(5+x)";
+                string func = "(2*x)/(2+x)";
                 string funcPostFix = Calculator.Convert2Postfix(func);
                 string test = DerivativeCalculator.Derivative(funcPostFix);
 
-                //Derivative of (2+x)*(5+x) evaluated at 2, both outputs should be equal
-                Console.WriteLine(Calculator.Calculate("2*x+7", 2));
+                //Derivative of (2*x)/(2+x) evaluated at 2, both outputs should be equal
+                Console.WriteLine(Calculator.Calculate("4/(2+x)^2", 2));
                 Console.WriteLine(Calculator.Calculate(test, 2));
                 Console.ReadLine();
 
