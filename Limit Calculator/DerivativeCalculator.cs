@@ -173,7 +173,7 @@ namespace Limit_Calculator
 
             bool completeA = IsComplete(A);
             bool completeB = IsComplete(B);
-            
+
             //Loop until complete expressons
             while ((!completeA) || (!completeB))
             {
@@ -211,14 +211,15 @@ namespace Limit_Calculator
         private static string EvaluateDerivative(string[] A, string[] B, string token)
         {
             string[] tempList = {"temp"};
+            string tempA = "", tempB = "";
 
             //Derivatives of constants
-            if (IsSingular(A))
+            if ((IsSingular(A)) & (token == "temp"))
             {
                 return "0";
             }
             //Derivates of x
-            else if (IsSingular(B))
+            else if ((IsSingular(B)) & (token == "temp"))
             {
                 return "1";
             }
@@ -227,38 +228,35 @@ namespace Limit_Calculator
                 if (IsSingular(A))
                 {
                     //Singular expression - check whether x or number
-                    if (int.TryParse(A[0], out int n))
+                    if (int.TryParse(A[0], out int j))
                     {
-                        string tempA = EvaluateDerivative(A, tempList, "temp");
+                        tempA = EvaluateDerivative(A, tempList, "temp");
                     }
                     else
                     {
-                        string tempA = EvaluateDerivative(tempList, A, "temp");
+                        tempA = EvaluateDerivative(tempList, A, "temp");
                     }
                 }
-                else if (IsSingular(B))
+                if (IsSingular(B))
                 {
                     //Singular expression - check whether x or number
-                    if (int.TryParse(B[0], out int n))
+                    if (int.TryParse(B[0], out int k))
                     {
-                        string tempB = EvaluateDerivative(A, tempList, "temp");
+                        tempB = EvaluateDerivative(A, tempList, "temp");
                     }
                     else
                     {
-                        string tempB = EvaluateDerivative(tempList, A, "temp");
+                        tempB = EvaluateDerivative(tempList, A, "temp");
                     }
                 }
-                else
-                {
-                    return CompleteExpressions(A) + token + CompleteExpressions(B);
-                }
-                return CompleteExpressions(A);
+                
+                return tempA + token + tempB;
             }
+            /*
             else if (token == "cos")
             {
                 return EvaluateDerivative(A, B, "const") + " " + "*" + " " + A + " " + "sin";
             }
-            /*
             else if (token.Contains("^"))
             {
                 //Form of n^x
@@ -288,6 +286,7 @@ namespace Limit_Calculator
             */
             else
             {
+                //Only put in to avoid compile errors
                 return A[0];
             }
         }

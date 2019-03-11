@@ -62,14 +62,25 @@ namespace Limit_Calculator
 
             if (debugDerivative)
             {
-                string func2 = "2+(x+2)^2+2^x";
-                string funcPostFix = Calculator.Convert2Postfix(func2);
+                string func = "2+x";
+                string funcPostFix = Calculator.Convert2Postfix(func);
                 string test = DerivativeCalculator.Derivative(funcPostFix);
+
+                //Derivative of 2+x evaluated at 2, both outputs should be equal
+                Console.WriteLine(Calculator.Calculate("1", 2));
+                Console.WriteLine(Calculator.Calculate(test, 2));
+                Console.ReadLine();
+
+                /*
+                string func2 = "2+(x+2)^2+2^x";
+                string funcPostFix2 = Calculator.Convert2Postfix(func2);
+                string test2 = DerivativeCalculator.Derivative(funcPostFix2);
 
                 //Derivative of 2+(x+2)^2+2^x evaluated at 2, both outputs should be equal
                 Console.WriteLine(Calculator.Calculate("2*(x+2)+(2^x*ln(2))", 2));
-                Console.WriteLine(Calculator.Calculate(test, 2));
+                Console.WriteLine(Calculator.Calculate(test2, 2));
                 Console.ReadLine();
+                */
             }
             
             if (debugIsComplete)
