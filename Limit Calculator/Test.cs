@@ -62,12 +62,12 @@ namespace Limit_Calculator
 
             if (debugDerivative)
             {
-                string func = "2+x";
+                string func = "x+x-x-x-x";
                 string funcPostFix = Calculator.Convert2Postfix(func);
                 string test = DerivativeCalculator.Derivative(funcPostFix);
 
                 //Derivative of 2+x evaluated at 2, both outputs should be equal
-                Console.WriteLine(Calculator.Calculate("1", 2));
+                Console.WriteLine(Calculator.Calculate("1+1-1-1-1", 2));
                 Console.WriteLine(Calculator.Calculate(test, 2));
                 Console.ReadLine();
 

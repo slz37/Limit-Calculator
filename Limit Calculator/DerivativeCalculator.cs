@@ -242,15 +242,34 @@ namespace Limit_Calculator
                     //Singular expression - check whether x or number
                     if (int.TryParse(B[0], out int k))
                     {
-                        tempB = EvaluateDerivative(A, tempList, "temp");
+                        tempB = EvaluateDerivative(B, tempList, "temp");
                     }
                     else
                     {
-                        tempB = EvaluateDerivative(tempList, A, "temp");
+                        tempB = EvaluateDerivative(tempList, B, "temp");
                     }
                 }
-                
-                return tempA + token + tempB;
+
+                //Call derivatives again if not done
+                if (!String.IsNullOrEmpty(tempA))
+                {
+                    if (!String.IsNullOrEmpty(tempB))
+                    {
+                        return tempA + token + tempB;
+                    }
+                    else
+                    {
+                        return tempA + token + CompleteExpressions(B);
+                    }
+                }
+                else if (!String.IsNullOrEmpty(tempB))
+                {
+                    return CompleteExpressions(A) + token + tempB;
+                }
+                else
+                {
+                    return CompleteExpressions(A) + token + CompleteExpressions(B);
+                }
             }
             /*
             else if (token == "cos")
