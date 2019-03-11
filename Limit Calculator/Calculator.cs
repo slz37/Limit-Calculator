@@ -37,7 +37,7 @@ namespace Limit_Calculator
                 {
                     string x = tokenStack.Pop();
                     string y = tokenStack.Pop();
-                    string exp = "(" + x + token + y + ")";
+                    string exp = "(" + y + token + x + ")";
 
                     tokenStack.Push(exp);
                 }

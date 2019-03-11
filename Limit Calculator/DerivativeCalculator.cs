@@ -78,80 +78,14 @@ namespace Limit_Calculator
         /// <returns></returns>
         public static string Derivative(string func)
         {
-            Stack<string> derivativeStack = new Stack<string>();
-            Stack<string> tokenStack = new Stack<string>();
             string[] postfixArray = func.Split(null);
             string funcDer = "";
-
-            //Operator lists for different number of operands
-            List<string> unaryOperators = new List<string>();
-            List<string> binaryOperators = new List<string>();
-            Dictionary<string, int> operators = new Dictionary<string, int>();
-            OperatorFunctions.UnaryOperators(unaryOperators);
-            OperatorFunctions.BinaryOperators(binaryOperators);
-            OperatorFunctions.Operators(operators);
 
             //Reverse array to do derivatives outside -> in
             Array.Reverse(postfixArray);
 
             //Now pass to recursive loop
             funcDer = CompleteExpressions(postfixArray);
-            /*
-            //Loop over all elements of the postfix expression
-            for (int i = 0; i < postfixArray.Length; i++)
-            {
-                string token = postfixArray[i];
-                //Derivatives of binary operators
-                if (binaryOperators.Any(token.Contains))
-                {
-                    string B = postfixArray[i + 1];
-                    string A = postfixArray[i + 2];
-
-                    //Group tokens until operands satisfy all operators
-                    while ((operators.Any(p => p.Key == A)) || (operators.Any(p => p.Key == B)))
-                    {
-                        if (binaryOperators.Any(B.Contains))
-                        {
-
-                        }
-                        else if (unaryOperators.Any(B.Contains))
-                        {
-
-                        }
-                        else if (binaryOperators.Any(A.Contains))
-                        {
-
-                        }
-                        else if (unaryOperators.Any(A.Contains))
-                        {
-
-                        }
-                    }
-
-                    string derivative = EvaluateDerivative(A, B, token);
-                    derivativeStack.Push(derivative);
-                }
-                //Derivatives of unary operators
-                else if (unaryOperators.Any(token.Contains))
-                {
-                    string A = "";
-                    string B = tokenStack.Pop();
-
-                    string derivative = EvaluateDerivative(A, B, token);
-                    derivativeStack.Push(derivative);
-                }
-                else
-                {
-                    tokenStack.Push(token);
-                }
-            }
-
-            //Clear stack now that we're done
-            while (derivativeStack.Count > 0)
-            {
-                funcDer += tokenStack.Pop();
-            }
-            */
 
             return funcDer;
         }
@@ -165,41 +99,72 @@ namespace Limit_Calculator
         /// <returns></returns>
         private static string CompleteExpressions(string[] postfixArray)
         {
+            //Operator lists for different number of operands
+            List<string> unaryOperators = new List<string>();
+            OperatorFunctions.UnaryOperators(unaryOperators);
+
             //Initialize
             int i = 0;
             string token = postfixArray[0];
-            string B = postfixArray[1];
-            string A = postfixArray[2];
 
-            bool completeA = IsComplete(A);
-            bool completeB = IsComplete(B);
-
-            //Loop until complete expressons
-            while ((!completeA) || (!completeB))
+            //Split between unary and binary operators
+            if (unaryOperators.Any(token.Contains))
             {
-                //Try to fix completeness
-                if (!completeB)
+                string A = postfixArray[1];
+                string B = "temp";
+
+                bool completeA = IsComplete(A);
+
+                //Loop until complete expressons
+                while (!completeA)
                 {
-                    B += " " + A;
-                    A = postfixArray[i + 3];
-                }
-                else if (!completeA)
-                {
-                    A += " " + postfixArray[i + 3];
+                    i++;
+
+                    if (!completeA)
+                    {
+                        A += " " + postfixArray[i + 1];
+                    }
+
+                    //Recheck for completeness and increment
+                    completeA = IsComplete(A);
                 }
 
-                //Recheck for completeness and increment
-                completeA = IsComplete(A);
-                completeB = IsComplete(B);
-                i++;
+                string[] ArrA = A.Split(' ');
+                string[] ArrB = B.Split(' ');
+                return EvaluateDerivative(ArrA, ArrB, token);
             }
+            else
+            {
+                string B = postfixArray[1];
+                string A = postfixArray[2];
 
-            //Reverse strings back to normal and take derivative
-            //A = StringFunctions.ReverseString(A);
-            //B = StringFunctions.ReverseString(B);
-            string[] ArrA = A.Split(' ');
-            string[] ArrB = B.Split(' ');
-            return EvaluateDerivative(ArrA, ArrB, token);
+                bool completeA = IsComplete(A);
+                bool completeB = IsComplete(B);
+
+                //Loop until complete expressons
+                while ((!completeA) || (!completeB))
+                {
+                    //Try to fix completeness
+                    if (!completeB)
+                    {
+                        B += " " + A;
+                        A = postfixArray[i + 3];
+                    }
+                    else if (!completeA)
+                    {
+                        A += " " + postfixArray[i + 3];
+                    }
+
+                    //Recheck for completeness and increment
+                    completeA = IsComplete(A);
+                    completeB = IsComplete(B);
+                    i++;
+                }
+
+                string[] ArrA = A.Split(' ');
+                string[] ArrB = B.Split(' ');
+                return EvaluateDerivative(ArrA, ArrB, token);
+            }
         }
 
         /// <summary>
@@ -334,38 +299,66 @@ namespace Limit_Calculator
                             token + "(" + stringB + "*" + stringB + ")" + ")";
                 }
             }
-            /*
-            else if (token == "cos")
+            else if (token == "ln")
             {
-                return EvaluateDerivative(A, B, "const") + " " + "*" + " " + A + " " + "sin";
-            }
-            else if (token.Contains("^"))
-            {
-                //Form of n^x
-                if (B == "x")
+                //ln(a)
+                if (tempA == "0")
                 {
-                    //Actually x^x
-                    if (A == "x")
-                    {
-                        //(d/dx) x^x = x^x*(ln(x)+1)
-                        return A + token + A + "*" + "(ln(" + A + ")+1";
-                    }
-                    else
-                    {
-                        //(d/dx) n^x = n^x * ln(n)
-                        return B + token + A + "*" + "ln(" + B + ")";
-                    }
+                    return "(" + "0" + ")";
                 }
-                //Form of x^n
+                //ln(x)
+                else if (tempA == "1")
+                {
+                    return "(" + "1" + "/" + A[0] + ")";
+                }
+                //ln(x...)
                 else
                 {
-                    double digitDec = double.Parse(B) - 1;
+                    //Convert to infix
+                    string stringA = Calculator.Convert2Infix(A);
 
-                    //(d/dx) x^n = n*x^(n-1)
-                    return B + "*" + A + token + "(" + digitDec + ")";
+                    return "(" + CompleteExpressions(A) + "*" + "1" + "/" + stringA + ")";
                 }
             }
-            */
+            //x^2 -> A=x B=2
+            //2^x -> B=2 A=x
+            else if (token == "^")
+            {
+                //Call derivatives again if not done
+                if (tempA == "0")
+                {
+                    //a^a
+                    if (tempB == "0")
+                    {
+                        return "(" + "0" + ")";
+                    }
+                    //a^x
+                    else
+                    {
+                        //Convert to infix
+                        string stringB = Calculator.Convert2Infix(B);
+
+                        return "(" + A[0] + token + B + "*" + "ln(" + A[0] + "*" + CompleteExpressions(B) + ")" + ")";
+                    }
+                }
+                //x^a
+                else if (tempB == "0")
+                {
+                    //Convert to infix
+                    string stringA = Calculator.Convert2Infix(A);
+
+                    return "(" + B[0] + "*" + CompleteExpressions(A) + "*" + "(" + stringA + token + "(" + B[0] + "-" + "1" + ")" + ")" + ")";
+                }
+                //x^x
+                else
+                {
+                    //Convert to infix
+                    string stringA = Calculator.Convert2Infix(A);
+                    string stringB = Calculator.Convert2Infix(B);
+
+                    return "(" + "(" + stringA + token + stringB + ")" + "*" + ")";
+                }
+            }
             else
             {
                 //Only put in to avoid compile errors

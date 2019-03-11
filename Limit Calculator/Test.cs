@@ -18,8 +18,6 @@ namespace Limit_Calculator
             //Debug flags
             bool debugLimit = false;
             bool debugDerivative = true;
-            bool debugIsComplete = false;
-            bool debugPostfix2Infix = false;
 
             if (debugLimit)
             {
@@ -30,7 +28,7 @@ namespace Limit_Calculator
                 Dictionary<string, int> operators = new Dictionary<string, int>();
                 OperatorFunctions.Operators(operators);
 
-                //Test as many different operators I can think of
+                //Test as many different operators I can think of - probably don't need test suite for this
                 func = "-5 + (((sqrt(x) - x!)^2 / (x^2 * 5 + 3 * csc(cos(x)))) % 2) + abs(x) + ln(x) + arctan(x)";
                 limStr = "5";
 
@@ -63,46 +61,30 @@ namespace Limit_Calculator
 
             if (debugDerivative)
             {
-                string func = "(2*x)/(2+x)";
-                string funcPostFix = Calculator.Convert2Postfix(func);
-                string test = DerivativeCalculator.Derivative(funcPostFix);
+                string[] funcList = {"x+x+x-x",
+                                     "ln(1/x)",
+                                     "(x+2)/(x-5)",
+                                     "(x*2)+(x/5)",
+                                     "2+(x+2)^2+2^x",
+                                    };
 
-                //Derivative of (2*x)/(2+x) evaluated at 2, both outputs should be equal
-                Console.WriteLine(Calculator.Calculate("4/(2+x)^2", 2));
-                Console.WriteLine(Calculator.Calculate(test, 2));
+                //Run through test suite
+                foreach (string func in funcList)
+                {
+                    try
+                    {
+                        string funcPostFix = Calculator.Convert2Postfix(func);
+                        string test = DerivativeCalculator.Derivative(funcPostFix);
+
+                        //Derivatives
+                        Console.WriteLine(func + ": " + Calculator.Calculate(test, 2) + "\n");
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Error with derivative of: " + func + "\n");
+                    }
+                }
                 Console.ReadLine();
-
-                /*
-                string func2 = "2+(x+2)^2+2^x";
-                string funcPostFix2 = Calculator.Convert2Postfix(func2);
-                string test2 = DerivativeCalculator.Derivative(funcPostFix2);
-
-                //Derivative of 2+(x+2)^2+2^x evaluated at 2, both outputs should be equal
-                Console.WriteLine(Calculator.Calculate("2*(x+2)+(2^x*ln(2))", 2));
-                Console.WriteLine(Calculator.Calculate(test2, 2));
-                Console.ReadLine();
-                */
-            }
-            
-            if (debugPostfix2Infix)
-            {
-                string[] postfixExp = {"2", "x", "*"};
-                string infixExp = Calculator.Convert2Infix(postfixExp);
-
-                Console.WriteLine(infixExp);
-                Console.ReadLine();
-            }
-
-            if (debugIsComplete)
-            {
-                string func = "^ x 2";
-                string funcRev = StringFunctions.ReverseString(func);
-                string funcEval = StringFunctions.ReplaceConstants(funcRev, Math.Tan(2 + Math.Exp(10)) + Math.PI);
-
-                //Console should show the value it evaluates to
-                Console.WriteLine(Calculator.EvaluatePostFix(funcEval));
-                Console.WriteLine(DerivativeCalculator.IsComplete(func));
-                Console.Read();
             }
         }
     }
