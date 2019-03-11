@@ -19,6 +19,7 @@ namespace Limit_Calculator
             bool debugLimit = false;
             bool debugDerivative = true;
             bool debugIsComplete = false;
+            bool debugPostfix2Infix = false;
 
             if (debugLimit)
             {
@@ -62,12 +63,12 @@ namespace Limit_Calculator
 
             if (debugDerivative)
             {
-                string func = "x+x-x-x-x";
+                string func = "(2+x)*(5+x)";
                 string funcPostFix = Calculator.Convert2Postfix(func);
                 string test = DerivativeCalculator.Derivative(funcPostFix);
 
-                //Derivative of 2+x evaluated at 2, both outputs should be equal
-                Console.WriteLine(Calculator.Calculate("1+1-1-1-1", 2));
+                //Derivative of (2+x)*(5+x) evaluated at 2, both outputs should be equal
+                Console.WriteLine(Calculator.Calculate("2*x+7", 2));
                 Console.WriteLine(Calculator.Calculate(test, 2));
                 Console.ReadLine();
 
@@ -83,6 +84,15 @@ namespace Limit_Calculator
                 */
             }
             
+            if (debugPostfix2Infix)
+            {
+                string[] postfixExp = {"2", "x", "*"};
+                string infixExp = Calculator.Convert2Infix(postfixExp);
+
+                Console.WriteLine(infixExp);
+                Console.ReadLine();
+            }
+
             if (debugIsComplete)
             {
                 string func = "^ x 2";

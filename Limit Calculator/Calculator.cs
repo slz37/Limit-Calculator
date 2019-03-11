@@ -10,6 +10,51 @@ namespace Limit_Calculator
     class Calculator
     {
         /// <summary>
+        /// Converts a given postfix array to a infix expression.
+        /// </summary>
+        /// <param name="postfixExp"></param>
+        /// <returns></returns>
+        public static string Convert2Infix(string[] postfixExp)
+        {
+            Stack<string> tokenStack = new Stack<string>();
+            List<string> postfixList = new List<string>();
+
+            //Operator dictionary to define order of operations
+            Dictionary<string, int> operators = new Dictionary<string, int>();
+            OperatorFunctions.Operators(operators);
+
+            //Recreate postfix list
+            for (int i = 0; i < postfixExp.Length; i++)
+            {
+                postfixList.Add(postfixExp[i]);
+            }
+            postfixList.Reverse();
+
+            //Iterate over all tokens in postfix expression
+            foreach (string token in postfixList)
+            {
+                if (operators.Any(p => p.Key == token))
+                {
+                    string x = tokenStack.Pop();
+                    string y = tokenStack.Pop();
+                    string exp = "(" + x + token + y + ")";
+
+                    tokenStack.Push(exp);
+                }
+                /*
+                * Add Numbers directly to string, the first
+                * one doesn't need a buffer space in-between
+                */
+                else
+                {
+                    tokenStack.Push(token);
+                }
+            }
+
+            return tokenStack.Pop();
+        }
+
+        /// <summary>
         /// Converts a given infix expression to a postfix expression
         /// to calculate the values used for testing convergence of
         /// limits.

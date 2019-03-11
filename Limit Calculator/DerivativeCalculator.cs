@@ -213,6 +213,31 @@ namespace Limit_Calculator
             string[] tempList = {"temp"};
             string tempA = "", tempB = "";
 
+            if ((IsSingular(A)) & (token != "temp"))
+            {
+                //Singular expression - check whether x or number
+                if (int.TryParse(A[0], out int j))
+                {
+                    tempA = EvaluateDerivative(A, tempList, "temp");
+                }
+                else
+                {
+                    tempA = EvaluateDerivative(tempList, A, "temp");
+                }
+            }
+            if ((IsSingular(B)) &(token != "temp"))
+            {
+                //Singular expression - check whether x or number
+                if (int.TryParse(B[0], out int k))
+                {
+                    tempB = EvaluateDerivative(B, tempList, "temp");
+                }
+                else
+                {
+                    tempB = EvaluateDerivative(tempList, B, "temp");
+                }
+            }
+
             //Derivatives of constants
             if ((IsSingular(A)) & (token == "temp"))
             {
@@ -225,50 +250,55 @@ namespace Limit_Calculator
             }
             else if ((token == "+") || (token == "-"))
             {
-                if (IsSingular(A))
-                {
-                    //Singular expression - check whether x or number
-                    if (int.TryParse(A[0], out int j))
-                    {
-                        tempA = EvaluateDerivative(A, tempList, "temp");
-                    }
-                    else
-                    {
-                        tempA = EvaluateDerivative(tempList, A, "temp");
-                    }
-                }
-                if (IsSingular(B))
-                {
-                    //Singular expression - check whether x or number
-                    if (int.TryParse(B[0], out int k))
-                    {
-                        tempB = EvaluateDerivative(B, tempList, "temp");
-                    }
-                    else
-                    {
-                        tempB = EvaluateDerivative(tempList, B, "temp");
-                    }
-                }
-
                 //Call derivatives again if not done
                 if (!String.IsNullOrEmpty(tempA))
                 {
                     if (!String.IsNullOrEmpty(tempB))
                     {
-                        return tempA + token + tempB;
+                        return "(" + tempA + token + tempB + ")";
                     }
                     else
                     {
-                        return tempA + token + CompleteExpressions(B);
+                        return "(" + tempA + token + CompleteExpressions(B) + ")";
                     }
                 }
                 else if (!String.IsNullOrEmpty(tempB))
                 {
-                    return CompleteExpressions(A) + token + tempB;
+                    return "(" + CompleteExpressions(A) + token + tempB + ")";
                 }
                 else
                 {
-                    return CompleteExpressions(A) + token + CompleteExpressions(B);
+                    return "(" + CompleteExpressions(A) + token + CompleteExpressions(B) + ")";
+                }
+            }
+            else if (token == "*")
+            {
+                //Call derivatives again if not done
+                if (!String.IsNullOrEmpty(tempA))
+                {
+                    if (!String.IsNullOrEmpty(tempB))
+                    {
+                        return "(" + tempB + token + A[0] + "+" + tempA + token + B[0] + ")";
+                    }
+                    else
+                    {
+                        //Array to list and reverse
+                        string stringB = Calculator.Convert2Infix(B);
+                        return "(" + CompleteExpressions(B) + token + A[0] + "+" + tempA + token + stringB + ")";
+                    }
+                }
+                else if (!String.IsNullOrEmpty(tempB))
+                {
+                    //Convert to infix
+                    string stringA = Calculator.Convert2Infix(A);
+                    return "(" + tempB + token + stringA + "+" + B[0] + token + CompleteExpressions(A) + ")";
+                }
+                else
+                {
+                    //Convert to infix
+                    string stringA = Calculator.Convert2Infix(A);
+                    string stringB = Calculator.Convert2Infix(B);
+                    return "(" + stringB + token + CompleteExpressions(A) + "+" + stringA + token + CompleteExpressions(B) + ")";
                 }
             }
             /*
