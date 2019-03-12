@@ -18,6 +18,7 @@ namespace Limit_Calculator
             //Debug flags
             bool debugLimit = false;
             bool debugDerivative = true;
+            bool debugIsComplete = false;
 
             if (debugLimit)
             {
@@ -59,9 +60,22 @@ namespace Limit_Calculator
                 Console.ReadLine();
             }
 
+            if (debugIsComplete)
+            {
+                string func = "ln 2";
+                //Calculator.EvaluatePostFix
+                bool testComplete = DerivativeCalculator.IsComplete(func);
+                Console.WriteLine(testComplete);
+                Console.ReadLine();
+            }
+
             if (debugDerivative)
             {
-                string[] funcList = {"x+x+x-x",
+                string[] funcList = {"(x+1)^(x+1)",
+                                     "(x+2)^2",
+                                     "x^5",
+                                     "2^(x+2)",
+                                     "x+x+x-x",
                                      "ln(1/x)",
                                      "(x+2)/(x-5)",
                                      "(x*2)+(x/5)",

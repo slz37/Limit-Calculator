@@ -51,7 +51,6 @@
     <Compile Include="Calculator.cs" />
     <Compile Include="DerivativeCalculator.cs" />
     <Compile Include="Test.cs" />
-    <Compile Include="DeprecatedCode.cs" />
     <Compile Include="LanczosCoefficients.cs" />
     <Compile Include="MathFunctions.cs" />
     <Compile Include="StringFunctions.cs" />

@@ -19,9 +19,11 @@ namespace Limit_Calculator
             Stack<string> tokenStack = new Stack<string>();
             List<string> postfixList = new List<string>();
 
-            //Operator dictionary to define order of operations
-            Dictionary<string, int> operators = new Dictionary<string, int>();
-            OperatorFunctions.Operators(operators);
+            //Operator lists for different number of operands
+            List<string> unaryOperators = new List<string>();
+            List<string> binaryOperators = new List<string>();
+            OperatorFunctions.UnaryOperators(unaryOperators);
+            OperatorFunctions.BinaryOperators(binaryOperators);
 
             //Recreate postfix list
             for (int i = 0; i < postfixExp.Length; i++)
@@ -33,11 +35,20 @@ namespace Limit_Calculator
             //Iterate over all tokens in postfix expression
             foreach (string token in postfixList)
             {
-                if (operators.Any(p => p.Key == token))
+                //Binary operators
+                if (binaryOperators.Any(token.Contains))
                 {
                     string x = tokenStack.Pop();
                     string y = tokenStack.Pop();
                     string exp = "(" + y + token + x + ")";
+
+                    tokenStack.Push(exp);
+                }
+                //Unary operators
+                else if (unaryOperators.Any(token.Contains))
+                {
+                    string x = tokenStack.Pop();
+                    string exp = "(" + token + "(" + x + ")" + ")";
 
                     tokenStack.Push(exp);
                 }

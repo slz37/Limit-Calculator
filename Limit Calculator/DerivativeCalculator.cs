@@ -338,7 +338,16 @@ namespace Limit_Calculator
                         //Convert to infix
                         string stringB = Calculator.Convert2Infix(B);
 
-                        return "(" + A[0] + token + B + "*" + "ln(" + A[0] + "*" + CompleteExpressions(B) + ")" + ")";
+                        //Create array of ln(a^x) to take derivative of
+                        List<string> lnBList = new List<string>{"*", "ln", A[0]};
+                        foreach (string element in B)
+                        {
+                            lnBList.Add(element);
+                        }
+                        string[] lnB = lnBList.ToArray();
+
+                        //d/dx = a^x * d/dx (ln(a^x))
+                        return "(" + A[0] + token + stringB + "*" + CompleteExpressions(lnB) + ")";
                     }
                 }
                 //x^a
@@ -347,7 +356,16 @@ namespace Limit_Calculator
                     //Convert to infix
                     string stringA = Calculator.Convert2Infix(A);
 
-                    return "(" + B[0] + "*" + CompleteExpressions(A) + "*" + "(" + stringA + token + "(" + B[0] + "-" + "1" + ")" + ")" + ")";
+                    //Create array of ln(x^a) to take derivative of
+                    List<string> lnAList = new List<string> { "*", "ln" };
+                    foreach (string element in A)
+                    {
+                        lnAList.Add(element);
+                    }
+                    lnAList.Add(B[0]);
+                    string[] lnA = lnAList.ToArray();
+
+                    return "(" + stringA + token + B[0] + "*" + CompleteExpressions(lnA) + ")";
                 }
                 //x^x
                 else
@@ -356,7 +374,19 @@ namespace Limit_Calculator
                     string stringA = Calculator.Convert2Infix(A);
                     string stringB = Calculator.Convert2Infix(B);
 
-                    return "(" + "(" + stringA + token + stringB + ")" + "*" + ")";
+                    //Create array of ln(x^x) to take derivative of
+                    List<string> lnAList = new List<string> { "*", "ln" };
+                    foreach (string element in A)
+                    {
+                        lnAList.Add(element);
+                    }
+                    foreach (string element in B)
+                    {
+                        lnAList.Add(element);
+                    }
+                    string[] lnAB = lnAList.ToArray();
+
+                    return "(" + stringA + token + stringB + "*" + CompleteExpressions(lnAB) + ")";
                 }
             }
             else

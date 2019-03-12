@@ -265,10 +265,30 @@ namespace Limit_Calculator
         public static string ReverseString(string Exp)
         {
             //Convert to array and reverse
-            char[] charArray = Exp.ToCharArray();
-            Array.Reverse(charArray);
+            Stack<string> tempStack = new Stack<string>();
+            string[] stringArray = Exp.Split(' ');
+            string reversedExp = "";
 
-            return new string(charArray);
+            //Push to stack to reverse
+            foreach (string token in stringArray)
+            {
+                tempStack.Push(token);
+            }
+
+            //Recreate reversed string - avoid reversing ln, cos, etc.
+            for (int i = 0; i < stringArray.Length; i++)
+            {
+                if (i != stringArray.Length - 1)
+                {
+                    reversedExp += tempStack.Pop() + " ";
+                }
+                else
+                {
+                    reversedExp += tempStack.Pop();
+                }
+            }
+
+            return reversedExp;
         }
     }
 }
