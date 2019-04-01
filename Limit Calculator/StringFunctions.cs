@@ -50,9 +50,16 @@ namespace Limit_Calculator
         /// <param name="Exp"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static string ReplaceConstants(string Exp, double value = 0)
+        public static string ReplaceConstants(string Exp, double value = 0, bool replace_x = true)
         {
-            Exp = Exp.Replace("x", value.ToString());
+            //Replace x if desired
+            if (replace_x)
+            {
+                Exp = Exp.Replace("x", value.ToString());
+            }
+            else { }
+
+            // Replace common math arguments
             Exp = Exp.Replace("pi", "3.14159");
             Exp = Exp.Replace("e", "2.71828");
             Exp = Exp.Replace("phi", "1.61703");

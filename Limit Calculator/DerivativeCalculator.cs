@@ -181,7 +181,7 @@ namespace Limit_Calculator
             if ((IsSingular(A)) & (token != "temp"))
             {
                 //Singular expression - check whether x or number
-                if (int.TryParse(A[0], out int j))
+                if (float.TryParse(A[0], out float j))
                 {
                     tempA = EvaluateDerivative(A, tempList, "temp");
                 }
@@ -193,7 +193,7 @@ namespace Limit_Calculator
             if ((IsSingular(B)) &(token != "temp"))
             {
                 //Singular expression - check whether x or number
-                if (int.TryParse(B[0], out int k))
+                if (float.TryParse(B[0], out float k))
                 {
                     tempB = EvaluateDerivative(B, tempList, "temp");
                 }

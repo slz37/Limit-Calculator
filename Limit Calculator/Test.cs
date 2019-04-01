@@ -71,26 +71,28 @@ namespace Limit_Calculator
 
             if (debugDerivative)
             {
-                string[] funcList = {"(x+1)^(x+1)",
-                                     "(x+2)^2",
-                                     "x^5",
-                                     "2^(x+2)",
-                                     "x+x+x-x",
-                                     "ln(1/x)",
-                                     "(x+2)/(x-5)",
-                                     "(x*2)+(x/5)",
-                                     "2+(x+2)^2+2^x",
-                                    };
+                string[] funcList = {//"(x+1)^(x+1)",
+                                                  //"(x+2)^2",
+                                                  //"x^5",
+                                                  //"2^(x+2)",
+                                                  //"x+x+x-x",
+                                                 // "ln(1/x)",
+                                                  //"(x+2)/(x-5)",
+                                                 // "(x*2)+(x/5)",
+                                                 // "2+(x+2)^2+2^x",
+                                                  "e^x"
+                                                };
 
                 //Run through test suite
                 foreach (string func in funcList)
                 {
                     try
-                    {
-                        string funcPostFix = Calculator.Convert2Postfix(func);
+                    { 
+                        //Replace constants, convert to postfix, take derivative
+                        string analytic_func = StringFunctions.ReplaceConstants(func,  0, false);
+                        string funcPostFix = Calculator.Convert2Postfix(analytic_func);
                         string test = DerivativeCalculator.Derivative(funcPostFix);
 
-                        //Derivatives
                         Console.WriteLine(func + ": " + Calculator.Calculate(test, 2) + "\n");
                     }
                     catch
