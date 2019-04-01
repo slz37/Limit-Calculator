@@ -7,7 +7,7 @@ List of known things that do not work:
 
 1) Any limit whose function's domain does not extend to both sides of the limit. Ex: <img src="https://latex.codecogs.com/svg.latex?\lim_{x&space;\to&space;0}&space;\sqrt{x}&space;=&space;0" title="\lim_{x \to 0} \sqrt{x} = 0" />, but 
 code fails since <img src="https://latex.codecogs.com/svg.latex?\sqrt{x}" title="\sqrt{x}" /> is undefined for x<0. I might leave this since you could define the definition of a limit as existing if only both left and right sided limits exist at the value for the function.
-2) Limits that lead to an undefined form such as <img src="https://latex.codecogs.com/svg.latex?\frac{\infty}{\infty}" title="\frac{\infty}{\infty}" />. Currently, I am attempting to implement L'Hopital's Rule to deal with these scenarios. Currently, the main function runs test cases for taking the derivatives of a variety of functions and evaluates those derivatives at x=2. I check the results with wolframalpha to ensure that the derivatives are being taken correctly.
+2) Limits that lead to an undefined form such as ![equation](https://latex.codecogs.com/svg.latex?%5Cfrac%7B%5Cinfty%7D%7B%5Cinfty%7D). Currently, I am attempting to implement L'Hopital's Rule to deal with these scenarios. Currently, the main function runs test cases for taking the derivatives of a variety of functions and evaluates those derivatives at x=2. I check the results with wolframalpha to ensure that the derivatives are being taken correctly.
 
 ## Sources Used for Research:
 
@@ -17,7 +17,7 @@ code fails since <img src="https://latex.codecogs.com/svg.latex?\sqrt{x}" title=
 
 [Calculating the Lanczos Coefficients](https://mrob.com/pub/ries/lanczos-gamma.html)
 
-[More infor calculating Lanczos Coefficients](https://www.boost.org/doc/libs/1_43_0/libs/math/doc/sf_and_dist/html/math_toolkit/backgrounders/lanczos.html)
+[More info calculating Lanczos Coefficients](https://www.boost.org/doc/libs/1_43_0/libs/math/doc/sf_and_dist/html/math_toolkit/backgrounders/lanczos.html)
 
 [Paul Godfrey's original notes on Lanczos Coefficients](http://my.fit.edu/~gabdo/gamma.txt)
 
