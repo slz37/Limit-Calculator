@@ -121,13 +121,13 @@ namespace Limit_Calculator
                         string funcPostFix = Calculator.Convert2Postfix(analytic_func);
                         string test = DerivativeCalculator.Derivative(funcPostFix);
 
-                        Console.WriteLine(func + ": " + Calculator.Calculate(test, 2) + " ans: " +  ans + "\n");
+                        Console.WriteLine(func + ": " + Calculator.Calculate(test, 2) + " ans: " +  ans);
                     }
                     catch
                     {
                         string func = funcList[i];
 
-                        Console.WriteLine("Error with derivative of: " + func + "\n");
+                        Console.WriteLine("Error with derivative of: " + func);
                     }
                 }
                 Console.ReadLine();

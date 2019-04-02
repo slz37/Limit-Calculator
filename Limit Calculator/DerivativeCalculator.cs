@@ -220,11 +220,12 @@ namespace Limit_Calculator
             {
                 return "1";
             }
+            /* Relic - might not be needed
             else if ((token == "~") & (B[0] == "temp"))
             {
-                    //Relic - might not be needed
                     return "(" + "-" + CompleteExpressions(A);
             }
+            */
             else if ((token == "+") || (token == "-"))
             {
                 //Call derivatives again if not done

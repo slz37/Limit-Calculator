@@ -123,7 +123,7 @@ namespace Limit_Calculator
             unaryOperators.Add("ln");
             unaryOperators.Add("sqrt");
             unaryOperators.Add("!");
-            unaryOperators.Add("~");
+            //unaryOperators.Add("~");
             unaryOperators.Add("cos");
             unaryOperators.Add("sin");
             unaryOperators.Add("tan");
@@ -164,7 +164,7 @@ namespace Limit_Calculator
             operators.Add("ln", 4);
             operators.Add("sqrt", 4);
             operators.Add("!", 4);
-            operators.Add("~", 1);
+            //operators.Add("~", 1);
             operators.Add("cos", 4);
             operators.Add("sin", 4);
             operators.Add("tan", 4);
