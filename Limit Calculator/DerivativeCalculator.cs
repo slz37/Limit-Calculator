@@ -101,13 +101,15 @@ namespace Limit_Calculator
         {
             //Operator lists for different number of operands
             List<string> unaryOperators = new List<string>();
+            List<string> binaryOperators = new List<string>();
             OperatorFunctions.UnaryOperators(unaryOperators);
+            OperatorFunctions.BinaryOperators(binaryOperators);
 
             //Initialize
             int i = 0;
             string token = postfixArray[0];
 
-            //Split between unary and binary operators
+            //Split between no, unary, and binary operators
             if (unaryOperators.Any(token.Contains))
             {
                 string A = postfixArray[1];
@@ -133,7 +135,7 @@ namespace Limit_Calculator
                 string[] ArrB = B.Split(' ');
                 return EvaluateDerivative(ArrA, ArrB, token);
             }
-            else
+            else if (binaryOperators.Any(token.Contains))
             {
                 string B = postfixArray[1];
                 string A = postfixArray[2];
@@ -164,6 +166,11 @@ namespace Limit_Calculator
                 string[] ArrA = A.Split(' ');
                 string[] ArrB = B.Split(' ');
                 return EvaluateDerivative(ArrA, ArrB, token);
+            }
+            else
+            {
+                string[] tempList = {"temp"};
+                return EvaluateDerivative(tempList, postfixArray, "temp");
             }
         }
 
@@ -212,6 +219,11 @@ namespace Limit_Calculator
             else if ((IsSingular(B)) & (token == "temp"))
             {
                 return "1";
+            }
+            else if ((token == "~") & (B[0] == "temp"))
+            {
+                    //Relic - might not be needed
+                    return "(" + "-" + CompleteExpressions(A);
             }
             else if ((token == "+") || (token == "-"))
             {
@@ -279,7 +291,7 @@ namespace Limit_Calculator
                     {
                         //Convert to infix
                         string stringB = Calculator.Convert2Infix(B);
-                        return "(" + "(" + stringB + "*" + tempA + "-" + A[0] + "*" + CompleteExpressions(B) + 
+                        return "(" + "(" + stringB + "*" + tempA + "-" + A[0] + "*" + CompleteExpressions(B) +
                                 ")" + token + "(" + stringB + "*" + stringB + ")" + ")";
                     }
                 }
@@ -287,7 +299,7 @@ namespace Limit_Calculator
                 {
                     //Convert to infix
                     string stringA = Calculator.Convert2Infix(A);
-                    return "(" + "(" + B[0] + "*" + CompleteExpressions(A) + "-" + stringA + "*" + tempB + ")" + 
+                    return "(" + "(" + B[0] + "*" + CompleteExpressions(A) + "-" + stringA + "*" + tempB + ")" +
                             token + "(" + B[0] + "*" + B[0] + ")" + ")";
                 }
                 else
@@ -339,7 +351,7 @@ namespace Limit_Calculator
                         string stringB = Calculator.Convert2Infix(B);
 
                         //Create array of ln(a^x) to take derivative of
-                        List<string> lnBList = new List<string>{"*", "ln", A[0]};
+                        List<string> lnBList = new List<string> { "*", "ln", A[0] };
                         foreach (string element in B)
                         {
                             lnBList.Add(element);
@@ -389,10 +401,31 @@ namespace Limit_Calculator
                     return "(" + stringA + token + stringB + "*" + CompleteExpressions(lnAB) + ")";
                 }
             }
+            else if (token  == "cos")
+            {
+                //cos(a)
+                if (tempA == "0")
+                {
+                    return "(" + "0" + ")";
+                }
+                //cos(x)
+                else if (tempA == "1")
+                {
+                    return "(" + "-" +  "sin" + "(" + A[0] + ")" +  ")";
+                }
+                //cos(x...)
+                else
+                {
+                    //Convert to infix
+                    string stringA = Calculator.Convert2Infix(A);
+
+                    return "(" + CompleteExpressions(A) + "*" + "(" + "-" + "sin" + "(" + stringA + ")" + ")" + ")";
+                }
+            }
             else
             {
-                //Only put in to avoid compile errors
-                return A[0];
+                //Error calculating derivative
+                throw new System.ArgumentException("Error in evaluating derivative!", "original");
             }
         }
     }

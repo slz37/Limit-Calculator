@@ -16,7 +16,7 @@ namespace Limit_Calculator
         static void Main(string[] args)
         {
             //Debug flags
-            bool debugLimit = false;
+            bool debugLimit = true;
             bool debugDerivative = true;
             bool debugIsComplete = false;
 
@@ -71,32 +71,62 @@ namespace Limit_Calculator
 
             if (debugDerivative)
             {
-                string[] funcList = {//"(x+1)^(x+1)",
-                                                  //"(x+2)^2",
-                                                  //"x^5",
-                                                  //"2^(x+2)",
-                                                  //"x+x+x-x",
-                                                 // "ln(1/x)",
-                                                  //"(x+2)/(x-5)",
-                                                 // "(x*2)+(x/5)",
-                                                 // "2+(x+2)^2+2^x",
-                                                  "e^x"
+                string[] funcList = {"(x+1)^(x+1)",
+                                                  "(x+2)^2",
+                                                  "x^5",
+                                                  "2^(x+2)",
+                                                  "x+x+x-x",
+                                                  "ln(1/x)",
+                                                  "(x+2)/(x-5)",
+                                                  "(x*2)+(x/5)",
+                                                  "2+(x+2)^2+2^x",
+                                                  "e^x",
+                                                  "cos(2)",
+                                                  "cos(x)",
+                                                  "cos(x^2)",
+                                                  "x",
+                                                  "-x",
+                                                  "-2^x"
                                                 };
 
+                //From wolframalpha
+                string[] correctAns = {"56.6625",
+                                                       "8",
+                                                       "80",
+                                                       "11.09035",
+                                                       "2",
+                                                       "-0.5",
+                                                       "-7/9",
+                                                       "2.2",
+                                                       "10.7726",
+                                                       "7.38905",
+                                                       "0",
+                                                       "-0.90929",
+                                                       "3.0272",
+                                                       "1",
+                                                       "-1",
+                                                       "-2.77258",
+                                                      };
+
                 //Run through test suite
-                foreach (string func in funcList)
+                for (int i = 0; i < funcList.Length; i++)
                 {
                     try
-                    { 
+                    {
+                        string func = funcList[i];
+                        string ans = correctAns[i];
+
                         //Replace constants, convert to postfix, take derivative
                         string analytic_func = StringFunctions.ReplaceConstants(func,  0, false);
                         string funcPostFix = Calculator.Convert2Postfix(analytic_func);
                         string test = DerivativeCalculator.Derivative(funcPostFix);
 
-                        Console.WriteLine(func + ": " + Calculator.Calculate(test, 2) + "\n");
+                        Console.WriteLine(func + ": " + Calculator.Calculate(test, 2) + " ans: " +  ans + "\n");
                     }
                     catch
                     {
+                        string func = funcList[i];
+
                         Console.WriteLine("Error with derivative of: " + func + "\n");
                     }
                 }

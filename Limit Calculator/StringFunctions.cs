@@ -59,7 +59,7 @@ namespace Limit_Calculator
             }
             else { }
 
-            // Replace common math arguments
+            // Replace common math constants
             Exp = Exp.Replace("pi", "3.14159");
             Exp = Exp.Replace("e", "2.71828");
             Exp = Exp.Replace("phi", "1.61703");
@@ -71,7 +71,7 @@ namespace Limit_Calculator
         /// <summary>
         /// This function takes an analytic expression and determines
         /// whether a "-" is a subtraction of two values or a negation
-        /// of one value. Replaces all negations with "~" instead of "-".
+        /// of one value. Substitutes negations with 0 - value instead.
         /// </summary>
         /// <param name="Exp"></param>
         /// <returns></returns>
@@ -88,6 +88,46 @@ namespace Limit_Calculator
 
             for (int i = 0; i < StrLen - 1; i++)
             {
+                if ((operators.Any(p => p.Key == ExpOut[i])) & (ExpOut[i + 1] == "-"))
+                {
+                    //Case a + -b
+                    ExpOut.Insert(i + 1, "0");
+                }
+                if ((ExpOut[i] == "(") & (ExpOut[i + 1] == "-"))
+                {
+                    //Case (-a)
+                    ExpOut.Insert(i + 1, "0");
+                }
+                if ((i == 0) & (ExpOut[i] == "-"))
+                {
+                    //Case -a + b
+                    ExpOut.Insert(i , "0");
+                }
+                if ((ExpOut[i] == "-") & (ExpOut[i + 1] == "(") & (i == 0))
+                {
+                    //Case -(a + b)
+                    ExpOut.Insert(i, "0");
+                }
+                //Relic - might not be needed
+                if (((ExpOut[i] == "-") & (ExpOut[i + 1] == "~")) |
+                    ((ExpOut[i] == "~") & (ExpOut[i + 1] == "-")))
+                {
+                    //Case ~-a or -~a
+                    ExpOut.RemoveRange(i, 2);
+                }
+                //Relic - might not be needed
+                if (((ExpOut[i] == "~") & (ExpOut[i + 1] == "~")) |
+                    ((ExpOut[i] == "-") & (ExpOut[i + 1] == "-")))
+                {
+                    //Case ~~a or --a
+                    ExpOut.RemoveRange(i, 2);
+                }
+
+                /*
+                    ################
+                    ## Old Method ##
+                    ################
+
                 if ((operators.Any(p => p.Key == ExpOut[i])) & (ExpOut[i + 1] == "-"))
                 {
                     //Case a + -b
@@ -119,7 +159,7 @@ namespace Limit_Calculator
                 {
                     //Case !!a or --a
                     ExpOut.RemoveRange(i, 2);
-                }
+                } */
             }
 
             return ExpOut;
@@ -269,6 +309,13 @@ namespace Limit_Calculator
             return newList;
         }
 
+        /// <summary>
+        /// Takes an input string expression and
+        /// reverses it while preserving number and
+        /// operator order (e.g. 56, ln, cos are not reversed).
+        /// </summary>
+        /// <param name="Exp"></param>
+        /// <returns></returns>
         public static string ReverseString(string Exp)
         {
             //Convert to array and reverse

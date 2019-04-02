@@ -165,20 +165,20 @@ namespace Limit_Calculator
         /// <param name="F"></param>
         /// <returns></returns>
         private static double[] MakeP(double[,] B, double[,] C,
-                                       double[,] Dr, double[,] Dc,
-                                       double[,] F)
+                                                               double[,] Dr, double[,] Dc,
+                                                               double[,] F)
         {
             double[,] P = new double[B.Length, B.Length];
             double[] p = new double[B.Length];
 
             //Matrix multiplication
             P = MathFunctions.MatrixMultiplication(
-                MathFunctions.MatrixMultiplication(
-                MathFunctions.MatrixMultiplication(
-                MathFunctions.MatrixMultiplication(Dr, B), 
-                                                       C),
-                                                       Dc),
-                                                       F);
+                  MathFunctions.MatrixMultiplication(
+                  MathFunctions.MatrixMultiplication(
+                  MathFunctions.MatrixMultiplication(Dr, B), 
+                                                                                            C),
+                                                                                          Dc),
+                                                                                             F);
 
             //Convert to column vector
             p = MathFunctions.ReduceDimensions(P);
