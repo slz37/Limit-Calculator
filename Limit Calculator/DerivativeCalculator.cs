@@ -465,6 +465,69 @@ namespace Limit_Calculator
                     return "(" + CompleteExpressions(A) + "*" + "(" + "sec" + "(" + stringA + ")" + "^2" + ")" + ")";
                 }
             }
+            else if (token == "arccos")
+            {
+                //arccos(a)
+                if (tempA == "0")
+                {
+                    return "(" + "0" + ")";
+                }
+                //arccos(x)
+                else if (tempA == "1")
+                {
+                    return "(" + "-" + "(" + "1" + "/" + "sqrt" + "(" + "1" + "-" + A[0] + "^2" + ")" + ")" + ")";
+                }
+                //arccos(x...)
+                else
+                {
+                    //Convert to infix
+                    string stringA = Calculator.Convert2Infix(A);
+
+                    return "(" + CompleteExpressions(A) + "*" + "(" + "-" + "(" + "1" + "/" + "sqrt" + "(" + "1" + "-" + stringA + "^2" + ")" + ")" + ")" + ")";
+                }
+            }
+            else if (token == "arcsin")
+            {
+                //arcsin(a)
+                if (tempA == "0")
+                {
+                    return "(" + "0" + ")";
+                }
+                //arcsin(x)
+                else if (tempA == "1")
+                {
+                    return "(" + "1" + "/" + "sqrt" + "(" + "1" + "-" + A[0] + "^2" + ")";
+                }
+                //arcsin(x...)
+                else
+                {
+                    //Convert to infix
+                    string stringA = Calculator.Convert2Infix(A);
+
+                    return "(" + CompleteExpressions(A) + "*" + "(" + "1" + "/" + "sqrt" + "(" + "1" + "-" + stringA + "^2" + ")" + ")";
+                }
+            }
+            else if (token == "arctan")
+            {
+                //arctan(a)
+                if (tempA == "0")
+                {
+                    return "(" + "0" + ")";
+                }
+                //arctan(x)
+                else if (tempA == "1")
+                {
+                    return "(" + "1" + "/" + "(" + "1" + "+" + A[0] + "^2" + ")" + ")";
+                }
+                //arctan(x...)
+                else
+                {
+                    //Convert to infix
+                    string stringA = Calculator.Convert2Infix(A);
+
+                    return "(" + CompleteExpressions(A) + "*" + "(" + "1" + "/" + "(" + "1" + "+" + stringA + "^2" + ")" + ")" + ")";
+                }
+            }
             else
             {
                 //Error calculating derivative

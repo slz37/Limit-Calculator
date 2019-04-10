@@ -115,6 +115,15 @@ namespace Limit_Calculator
                                      "tan(5)",
                                      "tan(x)",
                                      "tan(x^2)",
+                                     "arccos(5)",
+                                     "arccos(x)",
+                                     "arccos(x^2)",
+                                     "arctan(5)",
+                                     "arctan(x)",
+                                     "arctan(x^2)",
+                                     "arcsin(5)",
+                                     "arcsin(x)",
+                                     "arcsin(x^2)",
                                      };
 
             //From wolframalpha
@@ -139,7 +148,16 @@ namespace Limit_Calculator
                                        "-2.614574",
                                        "0",
                                        "5.774399",
-                                       "9.36220048"
+                                       "9.36220048",
+                                       "0",//Everything below this was done with x = 0.5
+                                       "-1.1547",
+                                       "-1.0328",
+                                       "0",
+                                       "0.8",
+                                       "0.941176",
+                                       "0",
+                                       "1.1547",
+                                       "1.0328",
                                        };
 
             //Run through test suite
@@ -155,7 +173,14 @@ namespace Limit_Calculator
                     string funcPostFix = Calculator.Convert2Postfix(analytic_func);
                     string test = DerivativeCalculator.Derivative(funcPostFix);
 
-                    Console.WriteLine(func + ": " + Calculator.Calculate(test, 2) + " ans: " + ans);
+                    if (i < 22)
+                    {
+                        Console.WriteLine(func + ": " + Calculator.Calculate(test, 2) + " ans: " + ans);
+                    }
+                    else
+                    {
+                        Console.WriteLine(func + ": " + Calculator.Calculate(test, 0.5) + " ans: " + ans);
+                    }
                 }
                 catch
                 {
