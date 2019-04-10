@@ -496,7 +496,7 @@ namespace Limit_Calculator
                 //arcsin(x)
                 else if (tempA == "1")
                 {
-                    return "(" + "1" + "/" + "sqrt" + "(" + "1" + "-" + A[0] + "^2" + ")";
+                    return "(" + "1" + "/" + "sqrt" + "(" + "1" + "-" + A[0] + "^2" + ")" + ")";
                 }
                 //arcsin(x...)
                 else
@@ -504,7 +504,7 @@ namespace Limit_Calculator
                     //Convert to infix
                     string stringA = Calculator.Convert2Infix(A);
 
-                    return "(" + CompleteExpressions(A) + "*" + "(" + "1" + "/" + "sqrt" + "(" + "1" + "-" + stringA + "^2" + ")" + ")";
+                    return "(" + CompleteExpressions(A) + "*" + "(" + "1" + "/" + "sqrt" + "(" + "1" + "-" + stringA + "^2" + ")" + ")" + ")";
                 }
             }
             else if (token == "arctan")
@@ -526,6 +526,69 @@ namespace Limit_Calculator
                     string stringA = Calculator.Convert2Infix(A);
 
                     return "(" + CompleteExpressions(A) + "*" + "(" + "1" + "/" + "(" + "1" + "+" + stringA + "^2" + ")" + ")" + ")";
+                }
+            }
+            else if (token == "cot")
+            {
+                //cot(a)
+                if (tempA == "0")
+                {
+                    return "(" + "0" + ")";
+                }
+                //cot(x)
+                else if (tempA == "1")
+                {
+                    return "(" + "-" + "(" + "csc" + "(" + A[0] + ")" + "^2" + ")" + ")";
+                }
+                //cot(x...)
+                else
+                {
+                    //Convert to infix
+                    string stringA = Calculator.Convert2Infix(A);
+
+                    return "(" + CompleteExpressions(A) + "*" + "(" + "-" + "(" + "csc" + "(" + stringA + ")" + "^2" + ")" + ")" + ")";
+                }
+            }
+            else if (token == "sec")
+            {
+                //sec(a)
+                if (tempA == "0")
+                {
+                    return "(" + "0" + ")";
+                }
+                //sec(x)
+                else if (tempA == "1")
+                {
+                    return "(" + "tan" + "(" + A[0] + ")" + "*" + "sec" + "(" + A[0] + ")" + ")";
+                }
+                //sec(x...)
+                else
+                {
+                    //Convert to infix
+                    string stringA = Calculator.Convert2Infix(A);
+
+                    return "(" + CompleteExpressions(A) + "*" + "(" + "tan" + "(" + stringA + ")" + "*" + "sec" + "(" + stringA + ")" + ")" + ")";
+                }
+            }
+            else if (token == "csc")
+            {
+                //csc(a)
+                if (tempA == "0")
+                {
+                    return "(" + "0" + ")";
+                }
+                //csc(x)
+                else if (tempA == "1")
+                {
+                    return "(" + "-" + "cot" + "(" + A[0] + ")" + "*" + "csc" + "(" + A[0] + ")" + ")";
+                }
+                //csc(x...)
+                else
+                {
+                    //Convert to infix
+                    string stringA = Calculator.Convert2Infix(A);
+
+                    return "(" + CompleteExpressions(A) + "*" + "(" + "-" + "cot" + "(" + stringA + ")" + "*" + "csc" + "(" + stringA + ")" + ")" + ")";
                 }
             }
             else
