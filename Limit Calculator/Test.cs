@@ -9,29 +9,38 @@ namespace Limit_Calculator
     class Test
     {
         /// <summary>
-        /// Test function for ensuring that certain methods
-        /// function properly
+        /// Tests for finding the limit of many
+        /// functions and comparing with results
+        /// found from wolframalpha.com
         /// </summary>
-        /// <param name="args"></param>
-        static void Main(string[] args)
+        public static void debugLimit()
         {
-            //Debug flags
-            bool debugLimit = true;
-            bool debugDerivative = true;
-            bool debugIsComplete = false;
+            string limStr, limPostFix;
+            double lim = 0;
 
-            if (debugLimit)
+            //Operator dictionary to define order of operations
+            Dictionary<string, int> operators = new Dictionary<string, int>();
+            OperatorFunctions.Operators(operators);
+
+            //Test as many different operators I can think of - probably don't need test suite for this
+            string[] funcList = { "-5 + (((sqrt(x) - x!)^2 / (x^2 * 5 + 3 * csc(cos(x)))) % 2) + abs(x) + ln(x) + arctan(x)",
+                                        "-(x+5)",
+                                        "x + -5",
+                                        "(-x)",
+                                        "-x + 5",
+                                    };
+            double[] correctAns = {3.166983673,
+                                        -10,
+                                        0,
+                                        -5,
+                                        0,
+                                        };
+
+            limStr = "5";
+            for (int i = 0; i < funcList.Length; i++)
             {
-                string func, limStr, limPostFix;
-                double lim = 0, ans;
-
-                //Operator dictionary to define order of operations
-                Dictionary<string, int> operators = new Dictionary<string, int>();
-                OperatorFunctions.Operators(operators);
-
-                //Test as many different operators I can think of - probably don't need test suite for this
-                func = "-5 + (((sqrt(x) - x!)^2 / (x^2 * 5 + 3 * csc(cos(x)))) % 2) + abs(x) + ln(x) + arctan(x)";
-                limStr = "5";
+                string func = funcList[i];
+                double ans = correctAns[i];
 
                 //Create list of elements in limit to test for operators
                 List<string> limList = new List<string>();
@@ -54,83 +63,91 @@ namespace Limit_Calculator
                 func = func.Replace(" ", "");
 
                 //Calculate limits and output answer
-                ans = LimitCalc.EvaluateLimit(func, lim);
-                Console.WriteLine("Limit as x->" + lim + " of " + func + " = " + Math.Round(ans, 3));
-                Console.WriteLine("Answer from Wolfram: " + 3.166983673);
-                Console.ReadLine();
+                double test = LimitCalc.EvaluateLimit(func, lim);
+                Console.WriteLine("Limit as x->" + lim + " of " + func + " = " + Math.Round(test, 3) + " ans: " + ans);
             }
+        }
 
-            if (debugIsComplete)
+        /// <summary>
+        /// Debugs the IsComplete function, which
+        /// checks whether a given string of operators
+        /// and operands can be computed.
+        /// </summary>
+        public static void debugIsComplete()
+        {
+            string func = "ln 2";
+            //Calculator.EvaluatePostFix
+            bool testComplete = DerivativeCalculator.IsComplete(func);
+            Console.WriteLine(testComplete);
+        }
+
+        /// <summary>
+        /// Debugs the derivative function, checking
+        /// against solutions found from wolframalpha.com
+        /// in order to compute L'Hopital's rule for
+        /// taking limits that result in an indeterminate
+        /// form.
+        /// </summary>
+        public static void debugDerivative()
+        {
+            string[] funcList = {"(x+1)^(x+1)",
+                                     "(x+2)^2",
+                                     "x^5",
+                                     "2^(x+2)",
+                                     "x+x+x-x",
+                                     "ln(1/x)",
+                                     "(x+2)/(x-5)",
+                                     "(x*2)+(x/5)",
+                                     "2+(x+2)^2+2^x",
+                                     "e^x",
+                                     "cos(2)",
+                                     "cos(x)",
+                                     "cos(x^2)",
+                                     "x",
+                                     "-x",
+                                     "-2^x",
+                                     };
+
+            //From wolframalpha
+            string[] correctAns = {"56.6625",
+                                       "8",
+                                       "80",
+                                       "11.09035",
+                                       "2",
+                                       "-0.5",
+                                       "-7/9",
+                                       "2.2",
+                                       "10.7726",
+                                       "7.38905",
+                                       "0",
+                                       "-0.90929",
+                                       "3.0272",
+                                       "1",
+                                       "-1",
+                                       "-2.77258",
+                                       };
+
+            //Run through test suite
+            for (int i = 0; i < funcList.Length; i++)
             {
-                string func = "ln 2";
-                //Calculator.EvaluatePostFix
-                bool testComplete = DerivativeCalculator.IsComplete(func);
-                Console.WriteLine(testComplete);
-                Console.ReadLine();
-            }
-
-            if (debugDerivative)
-            {
-                string[] funcList = {"(x+1)^(x+1)",
-                                                  "(x+2)^2",
-                                                  "x^5",
-                                                  "2^(x+2)",
-                                                  "x+x+x-x",
-                                                  "ln(1/x)",
-                                                  "(x+2)/(x-5)",
-                                                  "(x*2)+(x/5)",
-                                                  "2+(x+2)^2+2^x",
-                                                  "e^x",
-                                                  "cos(2)",
-                                                  "cos(x)",
-                                                  "cos(x^2)",
-                                                  "x",
-                                                  "-x",
-                                                  "-2^x"
-                                                };
-
-                //From wolframalpha
-                string[] correctAns = {"56.6625",
-                                                       "8",
-                                                       "80",
-                                                       "11.09035",
-                                                       "2",
-                                                       "-0.5",
-                                                       "-7/9",
-                                                       "2.2",
-                                                       "10.7726",
-                                                       "7.38905",
-                                                       "0",
-                                                       "-0.90929",
-                                                       "3.0272",
-                                                       "1",
-                                                       "-1",
-                                                       "-2.77258",
-                                                      };
-
-                //Run through test suite
-                for (int i = 0; i < funcList.Length; i++)
+                try
                 {
-                    try
-                    {
-                        string func = funcList[i];
-                        string ans = correctAns[i];
+                    string func = funcList[i];
+                    string ans = correctAns[i];
 
-                        //Replace constants, convert to postfix, take derivative
-                        string analytic_func = StringFunctions.ReplaceConstants(func,  0, false);
-                        string funcPostFix = Calculator.Convert2Postfix(analytic_func);
-                        string test = DerivativeCalculator.Derivative(funcPostFix);
+                    //Replace constants, convert to postfix, take derivative
+                    string analytic_func = StringFunctions.ReplaceConstants(func, 0, false);
+                    string funcPostFix = Calculator.Convert2Postfix(analytic_func);
+                    string test = DerivativeCalculator.Derivative(funcPostFix);
 
-                        Console.WriteLine(func + ": " + Calculator.Calculate(test, 2) + " ans: " +  ans);
-                    }
-                    catch
-                    {
-                        string func = funcList[i];
-
-                        Console.WriteLine("Error with derivative of: " + func);
-                    }
+                    Console.WriteLine(func + ": " + Calculator.Calculate(test, 2) + " ans: " + ans);
                 }
-                Console.ReadLine();
+                catch
+                {
+                    string func = funcList[i];
+
+                    Console.WriteLine("Error with derivative of: " + func);
+                }
             }
         }
     }

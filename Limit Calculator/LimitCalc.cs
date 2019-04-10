@@ -93,6 +93,34 @@ namespace Limit_Calculator
                 //Console.WriteLine(x_l + " " + x_r + " " + del_x + " " + left_ans + " " + right_ans + " " + del + " " + ans);
             }
         }
+        
+
+        /// <summary>
+        /// Runs tests for debugging to ensure
+        /// proper functioning of the code.
+        /// </summary>
+        private static void RunTests()
+        {
+            //Debugging
+            bool debugLimit = true;
+            bool debugIsComplete = false;
+            bool debugDerivative = true;
+
+            if (debugLimit)
+            {
+                Test.debugLimit();
+            }
+            if (debugIsComplete)
+            {
+                Test.debugIsComplete();
+            }
+            if (debugDerivative)
+            {
+                Test.debugDerivative();
+            }
+
+            Console.ReadLine();
+        }
 
         /// <summary>
         /// Takes in user input for a function and a value to evaluate the limit at
@@ -100,7 +128,7 @@ namespace Limit_Calculator
         /// "inf" if it diverges.
         /// </summary>
         /// <param name="args"></param>
-        public static void Main2(string[] args)
+        private static void RunLimitCalc()
         {
             string func, limStr, limPostFix;
             double lim = 0, ans;
@@ -142,6 +170,41 @@ namespace Limit_Calculator
                 ans = EvaluateLimit(func, lim);
                 Console.WriteLine("Limit as x->" + lim + " of " + func + " = " + Math.Round(ans, 3));
                 Console.ReadLine();
+            }
+        }
+
+        /// <summary>
+        /// Main function that determines whether
+        /// to run debugger or continue with the
+        /// limit calculator.
+        /// </summary>
+        /// <param name="args"></param>
+        static void Main(string[] args)
+        {
+            bool userInput = true;
+
+            //Continous input until input is valid
+            while (userInput)
+            {
+                //Get user input
+                Console.WriteLine("Start (c)alculator or (d)ebug?");
+                string command = Console.ReadLine();
+
+                //Run respective commands
+                if (command == "c")
+                {
+                    RunLimitCalc();
+                    userInput = false;
+                }
+                else if (command == "d")
+                {
+                    RunTests();
+                    userInput = false;
+                }
+                else
+                {
+                    Console.WriteLine("Please choose (c) to start the calculator or (d) to run the debugger.");
+                }
             }
         }
     }
