@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Limit_Calculator
 {
-    class Test
+    class Tests
     {
         /// <summary>
         /// Tests for finding the limit of many
@@ -15,6 +15,7 @@ namespace Limit_Calculator
         /// </summary>
         public static void debugLimit()
         {
+            Console.WriteLine("Debugging limit methods:");
             string limStr, limPostFix;
             double lim = 0;
 
@@ -75,6 +76,7 @@ namespace Limit_Calculator
         /// </summary>
         public static void debugIsComplete()
         {
+            Console.WriteLine("Debugging IsComplete method:");
             string func = "ln 2";
             //Calculator.EvaluatePostFix
             bool testComplete = DerivativeCalculator.IsComplete(func);
@@ -90,6 +92,7 @@ namespace Limit_Calculator
         /// </summary>
         public static void debugDerivative()
         {
+            Console.WriteLine("Debugging derivative methods:");
             string[] funcList = {"(x+1)^(x+1)",
                                      "(x+2)^2",
                                      "x^5",
@@ -106,6 +109,12 @@ namespace Limit_Calculator
                                      "x",
                                      "-x",
                                      "-2^x",
+                                     "sin(5)",
+                                     "sin(x)",
+                                     "sin(x^2)",
+                                     "tan(5)",
+                                     "tan(x)",
+                                     "tan(x^2)",
                                      };
 
             //From wolframalpha
@@ -125,6 +134,12 @@ namespace Limit_Calculator
                                        "1",
                                        "-1",
                                        "-2.77258",
+                                       "0",
+                                       "-0.416146",
+                                       "-2.614574",
+                                       "0",
+                                       "5.774399",
+                                       "9.36220048"
                                        };
 
             //Run through test suite

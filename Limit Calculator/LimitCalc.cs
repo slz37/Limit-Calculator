@@ -102,21 +102,21 @@ namespace Limit_Calculator
         private static void RunTests()
         {
             //Debugging
-            bool debugLimit = true;
+            bool debugLimit = false;
             bool debugIsComplete = false;
             bool debugDerivative = true;
 
             if (debugLimit)
             {
-                Test.debugLimit();
+                Tests.debugLimit();
             }
             if (debugIsComplete)
             {
-                Test.debugIsComplete();
+                Tests.debugIsComplete();
             }
             if (debugDerivative)
             {
-                Test.debugDerivative();
+                Tests.debugDerivative();
             }
 
             Console.ReadLine();

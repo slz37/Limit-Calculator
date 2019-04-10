@@ -423,6 +423,48 @@ namespace Limit_Calculator
                     return "(" + CompleteExpressions(A) + "*" + "(" + "-" + "sin" + "(" + stringA + ")" + ")" + ")";
                 }
             }
+            else if (token == "sin")
+            {
+                //sin(a)
+                if (tempA == "0")
+                {
+                    return "(" + "0" + ")";
+                }
+                //sin(x)
+                else if (tempA == "1")
+                {
+                    return "(" + "cos" + "(" + A[0] + ")" + ")";
+                }
+                //sin(x...)
+                else
+                {
+                    //Convert to infix
+                    string stringA = Calculator.Convert2Infix(A);
+
+                    return "(" + CompleteExpressions(A) + "*" + "(" + "cos" + "(" + stringA + ")" + ")" + ")";
+                }
+            }
+            else if (token == "tan")
+            {
+                //tan(a)
+                if (tempA == "0")
+                {
+                    return "(" + "0" + ")";
+                }
+                //tan(x)
+                else if (tempA == "1")
+                {
+                    return "(" + "sec" + "(" + A[0] + ")" + "^2" + ")";
+                }
+                //tan(x...)
+                else
+                {
+                    //Convert to infix
+                    string stringA = Calculator.Convert2Infix(A);
+
+                    return "(" + CompleteExpressions(A) + "*" + "(" + "sec" + "(" + stringA + ")" + "^2" + ")" + ")";
+                }
+            }
             else
             {
                 //Error calculating derivative

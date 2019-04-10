@@ -61,10 +61,13 @@ namespace Limit_Calculator
 
             // Replace common math constants
             Exp = Exp.Replace("pi", "3.14159");
-            Exp = Exp.Replace("e", "2.71828");
             Exp = Exp.Replace("phi", "1.61703");
             Exp = Exp.Replace("inf", (double.PositiveInfinity).ToString());
             Exp = Exp.Replace("-inf", (double.NegativeInfinity).ToString());
+
+            //Careful e in sec and elsewhere
+            Exp = Exp.Replace("e", "2.71828");
+            Exp = Exp.Replace("s2.71828c", "sec"); //Undo what we just did if sec...
             return Exp;
         }
 
