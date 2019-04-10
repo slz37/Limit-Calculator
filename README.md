@@ -12,9 +12,9 @@ code fails since <img src="https://latex.codecogs.com/svg.latex?\sqrt{x}" title=
 
 ## Current Status:
 Derivatives functioning: </br>
-+, -, \*, /, ln, ^, sin, cos, tan </br>
++, -, \*, /, ln, ^, sin, cos, tan, arcsin, arccos, arctan </br>
 Derivatives left: </br>
-log, abs, sqrt, !, arccos, arcsin, arctan, cot, sec, csc, % </br>
+log, abs, sqrt, !, cot, sec, csc, % </br>
 
 Once all these are implemented, L'Hopital's rule should function correctly, and consequently, so should all infinite limits.
 
