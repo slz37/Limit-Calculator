@@ -9,6 +9,15 @@ List of known things that do not work:
 code fails since <img src="https://latex.codecogs.com/svg.latex?\sqrt{x}" title="\sqrt{x}" /> is undefined for x<0. I might leave this since you could define the definition of a limit as existing if only both left and right sided limits exist at the value for the function.
 2) Limits that lead to an undefined form such as ![equation](https://latex.codecogs.com/svg.latex?%5Cfrac%7B%5Cinfty%7D%7B%5Cinfty%7D). Currently, I am attempting to implement L'Hopital's Rule to deal with these scenarios. Currently, the main function runs test cases for taking the derivatives of a variety of functions and evaluates those derivatives at x=2. I check the results with wolframalpha to ensure that the derivatives are being taken correctly.
 
+
+## Current Status:
+Derivatives functioning: </br>
++, -, \*, /, ln, ^, cos </br>
+Derivatives left: </br>
+log, abs, sqrt, !, sin, tan, arccos, arcsin, arctan, cot, sec, csc, % </br>
+
+Once all these are implemented, L'Hopital's rule should function correctly, and consequently, so should all infinite limits.
+
 ## Sources Used for Research:
 
 [Taking derivatives of postfix expressions](http://elib.mi.sanu.ac.rs/files/journals/yjor/21/yujorn21p61-75.pdf)
