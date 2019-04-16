@@ -13,7 +13,7 @@ namespace Limit_Calculator
         /// functions and comparing with results
         /// found from wolframalpha.com
         /// </summary>
-        public static void debugLimit()
+        public static void DebugLimit()
         {
             Console.WriteLine("Debugging limit methods:");
             string limStr, limPostFix;
@@ -24,18 +24,12 @@ namespace Limit_Calculator
             OperatorFunctions.Operators(operators);
 
             //Test as many different operators I can think of - probably don't need test suite for this
-            string[] funcList = { "-5 + (((sqrt(x) - x!)^2 / (x^2 * 5 + 3 * csc(cos(x)))) % 2) + abs(x) + ln(x) + arctan(x)",
-                                        "-(x+5)",
-                                        "x + -5",
-                                        "(-x)",
-                                        "-x + 5",
-                                    };
+            string[] funcList = {"-5 + (((sqrt(x) - x!)^2 / (x^2 * 5 + 3 * csc(cos(x)))) % 2) + abs(x) + ln(x) + arctan(x)",
+                                 "-(x+5)", "x + -5", "(-x)", "-x + 5",
+                                  };
             double[] correctAns = {3.166983673,
-                                        -10,
-                                        0,
-                                        -5,
-                                        0,
-                                        };
+                                   -10, 0, -5, 0,
+                                   };
 
             limStr = "5";
             for (int i = 0; i < funcList.Length; i++)
@@ -74,11 +68,11 @@ namespace Limit_Calculator
         /// checks whether a given string of operators
         /// and operands can be computed.
         /// </summary>
-        public static void debugIsComplete()
+        public static void DebugIsComplete()
         {
             Console.WriteLine("Debugging IsComplete method:");
             string func = "ln 2";
-            //Calculator.EvaluatePostFix
+
             bool testComplete = DerivativeCalculator.IsComplete(func);
             Console.WriteLine(testComplete);
         }
@@ -90,7 +84,7 @@ namespace Limit_Calculator
         /// taking limits that result in an indeterminate
         /// form.
         /// </summary>
-        public static void debugDerivative()
+        public static void DebugDerivative()
         {
             Console.WriteLine("Debugging derivative methods:");
             string[] funcList = {"(x+1)^(x+1)", "(x+2)^2", "x^5",
@@ -100,7 +94,7 @@ namespace Limit_Calculator
                                  "x", "-x", "-2^x",
                                  "sin(5)", "sin(x)", "sin(x^2)",
                                  "tan(5)", "tan(x)", "tan(x^2)",
-                                 "arccos(5)", "arccos(x)", "arccos(x^2)",
+                                 "arccos(5)", "arccos(x)", "arccos(x^2)", //Everything on and below this was done with x = 0.5
                                  "arctan(5)", "arctan(x)", "arctan(x^2)",
                                  "arcsin(5)", "arcsin(x)","arcsin(x^2)",
                                  "sec(5)", "sec(x)", "sec(x^2)",
@@ -116,7 +110,7 @@ namespace Limit_Calculator
                                    "1", "-1", "-2.77258",
                                    "0", "-0.416146", "-2.614574",
                                    "0", "5.774399", "9.36220048",
-                                   "0", "-1.1547", "-1.0328", //Everything below this was done with x = 0.5
+                                   "0", "-1.1547", "-1.0328", //Everything on and below this was done with x = 0.5
                                    "0", "0.8", "0.941176",
                                    "0", "1.1547", "1.0328",
                                    "0", "0.622508", "0.263535",

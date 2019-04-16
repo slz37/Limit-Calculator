@@ -108,15 +108,15 @@ namespace Limit_Calculator
 
             if (debugLimit)
             {
-                Tests.debugLimit();
+                Tests.DebugLimit();
             }
             if (debugIsComplete)
             {
-                Tests.debugIsComplete();
+                Tests.DebugIsComplete();
             }
             if (debugDerivative)
             {
-                Tests.debugDerivative();
+                Tests.DebugDerivative();
             }
 
             Console.ReadLine();
