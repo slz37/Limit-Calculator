@@ -612,6 +612,27 @@ namespace Limit_Calculator
                     return "(" + "0.5" + "*" + CompleteExpressions(A) + "*" + "(" + "1" + "/" + "sqrt" + "(" + stringA + ")" + ")" + ")";
                 }
             }
+            else if (token == "abs")
+            {
+                //abs(a)
+                if (tempA == "0")
+                {
+                    return "(" + "0" + ")";
+                }
+                //abs(x)
+                else if (tempA == "1")
+                {
+                    return "(" + A[0] + "/" + "abs" + "(" + A[0] + ")" + ")";
+                }
+                //abs(x...)
+                else
+                {
+                    //Convert to infix
+                    string stringA = Calculator.Convert2Infix(A);
+
+                    return "(" + CompleteExpressions(A) + "*" + "(" + stringA + "/" + "abs" + "(" + stringA + ")" + ")" + ")";
+                }
+            }
             else
             {
                 //Error calculating derivative
