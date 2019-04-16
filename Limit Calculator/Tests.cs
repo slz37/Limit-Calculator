@@ -100,6 +100,7 @@ namespace Limit_Calculator
                                  "sec(5)", "sec(x)", "sec(x^2)",
                                  "csc(5)", "csc(x)", "csc(x^2)",
                                  "cot(5)", "cot(x)","cot(x^2)",
+                                 "sqrt(5)", "sqrt(x)", "sqrt(x^2)",
                                  };
 
             //From wolframalpha
@@ -116,6 +117,7 @@ namespace Limit_Calculator
                                    "0", "0.622508", "0.263535",
                                    "0", "-3.81809", "-15.8296",
                                    "0", "-4.35069", "-16.3375",
+                                   "0", "0.707107", "1",
                                    };
 
             //Run through test suite

@@ -79,7 +79,7 @@ namespace Limit_Calculator
         public static string Derivative(string func)
         {
             string[] postfixArray = func.Split(null);
-            string funcDer = "";
+            string funcDer;
 
             //Reverse array to do derivatives outside -> in
             Array.Reverse(postfixArray);
@@ -589,6 +589,27 @@ namespace Limit_Calculator
                     string stringA = Calculator.Convert2Infix(A);
 
                     return "(" + CompleteExpressions(A) + "*" + "(" + "-" + "cot" + "(" + stringA + ")" + "*" + "csc" + "(" + stringA + ")" + ")" + ")";
+                }
+            }
+            else if (token == "sqrt")
+            {
+                //sqrt(a)
+                if (tempA == "0")
+                {
+                    return "(" + "0" + ")";
+                }
+                //sqrt(x)
+                else if (tempA == "1")
+                {
+                    return "(" + "0.5" + "*" + "(" + "1" + "/" + "sqrt" + "(" + A[0] + ")" + ")" + ")";
+                }
+                //sqrt(x...)
+                else
+                {
+                    //Convert to infix
+                    string stringA = Calculator.Convert2Infix(A);
+
+                    return "(" + "0.5" + "*" + CompleteExpressions(A) + "*" + "(" + "1" + "/" + "sqrt" + "(" + stringA + ")" + ")" + ")";
                 }
             }
             else
