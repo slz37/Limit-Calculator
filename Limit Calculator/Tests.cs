@@ -25,10 +25,10 @@ namespace Limit_Calculator
 
             //Test as many different operators I can think of - probably don't need test suite for this
             string[] funcList = {"-5 + (((sqrt(x) - x!)^2 / (x^2 * 5 + 3 * csc(cos(x)))) % 2) + abs(x) + ln(x) + arctan(x)",
-                                 "-(x+5)", "x + -5", "(-x)", "-x + 5",
+                                 "-(x+5)", "x + -5", "(-x)", "-x + 5", "log2(x)"
                                   };
             double[] correctAns = {3.166983673,
-                                   -10, 0, -5, 0,
+                                   -10, 0, -5, 0, 0,
                                    };
 
             limStr = "5";
@@ -94,6 +94,7 @@ namespace Limit_Calculator
                                  "x", "-x", "-2^x",
                                  "sin(5)", "sin(x)", "sin(x^2)",
                                  "tan(5)", "tan(x)", "tan(x^2)",
+                                 "log5(5)", "logx(5)", "log5(x)", "log5(x^2)",
                                  "arccos(5)", "arccos(x)", "arccos(x^2)", //Everything on and below this was done with x = 0.5
                                  "arctan(5)", "arctan(x)", "arctan(x^2)",
                                  "arcsin(5)", "arcsin(x)","arcsin(x^2)",
@@ -112,6 +113,7 @@ namespace Limit_Calculator
                                    "1", "-1", "-2.77258",
                                    "0", "-0.416146", "-2.614574",
                                    "0", "5.774399", "9.36220048",
+                                   "0", "-6.69967", "1.24267", "2.48534",
                                    "0", "-1.1547", "-1.0328", //Everything on and below this was done with x = 0.5
                                    "0", "0.8", "0.941176",
                                    "0", "1.1547", "1.0328",
@@ -130,12 +132,19 @@ namespace Limit_Calculator
                     string func = funcList[i];
                     string ans = correctAns[i];
 
+                    //Remove any whitespace for parsing
+                    //func = "log_5(x)";
+
+                    //Calculate limits and output answer
+                    //double test = LimitCalc.EvaluateLimit(func, 2);
+                    //Console.WriteLine("Limit as x->" + 2 + " of " + func + " = " + Math.Round(test, 3) + " ans: " + ans);
+                    
                     //Replace constants, convert to postfix, take derivative
                     string analytic_func = StringFunctions.ReplaceConstants(func, 0, false);
                     string funcPostFix = Calculator.Convert2Postfix(analytic_func);
                     string test = DerivativeCalculator.Derivative(funcPostFix);
 
-                    if (i < 22)
+                    if (i < 27)
                     {
                         Console.WriteLine(func + ": " + Calculator.Calculate(test, 2) + " ans: " + ans);
                     }
@@ -143,6 +152,7 @@ namespace Limit_Calculator
                     {
                         Console.WriteLine(func + ": " + Calculator.Calculate(test, 0.5) + " ans: " + ans);
                     }
+                    
                 }
                 catch
                 {

@@ -118,7 +118,7 @@ namespace Limit_Calculator
         /// <param name="singleVarFuncs"></param>
         public static void UnaryOperators(List<string> unaryOperators)
         {
-            unaryOperators.Add("log");
+            //unaryOperators.Add("log");
             unaryOperators.Add("abs");
             unaryOperators.Add("ln");
             unaryOperators.Add("sqrt");
@@ -143,6 +143,7 @@ namespace Limit_Calculator
         /// <param name="singleVarFuncs"></param>
         public static void BinaryOperators(List<string> binaryOperators)
         {
+            binaryOperators.Add("log");
             binaryOperators.Add("^");
             binaryOperators.Add("*");
             binaryOperators.Add("/");

@@ -633,6 +633,32 @@ namespace Limit_Calculator
                     return "(" + CompleteExpressions(A) + "*" + "(" + stringA + "/" + "abs" + "(" + stringA + ")" + ")" + ")";
                 }
             }
+            else if (token == "log")
+            {
+                if (tempA == "0")
+                {
+                    //log_a(a)
+                    if (tempB == "0")
+                    {
+                        return "(" + "0" + ")";
+                    }
+                    //log_x(a)
+                    else
+                    {
+                        return "(" + "-" + "ln" + "(" + A[0] + ")" + "/" + "(" + B[0] + "*" + "ln" + "(" + B[0] + ")" + "^" + "2" + ")" + ")";
+                    }
+                }
+                else if (tempB == "0")
+                {
+                    //log_a(x)
+                    return "(" + "1" + "/" + "(" + A[0] + "*" + "ln" + "(" + B[0] + ")" + ")" + ")";
+                }
+                //log(x...)
+                else
+                {
+                    return "";
+                }
+            }
             else
             {
                 //Error calculating derivative
