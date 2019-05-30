@@ -82,35 +82,53 @@ namespace Limit_Calculator
         {
             //Deep clone list for constant length to iterate over
             List<string> ExpOut = new List<string>();
-            ExpOut = DeepCloneList(Exp);
+            //ExpOut = DeepCloneList(Exp);
+            ExpOut = Exp;
             int StrLen = Exp.Count();
 
             //Operator dictionary
             Dictionary<string, int> operators = new Dictionary<string, int>();
             OperatorFunctions.Operators(operators);
 
-            for (int i = 0; i < StrLen - 1; i++)
+            for (int i = 0; i < ExpOut.Count() - 1; i++)
             {
                 if ((operators.Any(p => p.Key == ExpOut[i])) & (ExpOut[i + 1] == "-"))
                 {
                     //Case a + -b
-                    ExpOut.Insert(i + 1, "0");
+                    //ExpOut.Insert(i + 1, "0");
+                    ExpOut.Insert(i + 1, "(");
+                    ExpOut.Insert(i + 2, "0");
+                    ExpOut.Insert(i + 5, ")");
+                    i += 3;
                 }
-                if ((ExpOut[i] == "(") & (ExpOut[i + 1] == "-"))
+                else if ((ExpOut[i] == "(") & (ExpOut[i + 1] == "-"))
                 {
                     //Case (-a)
-                    ExpOut.Insert(i + 1, "0");
+                    //ExpOut.Insert(i + 1, "0");
+                    ExpOut.Insert(i + 1, "(");
+                    ExpOut.Insert(i + 2, "0");
+                    ExpOut.Insert(i + 5, ")");
+                    i += 3;
                 }
-                if ((i == 0) & (ExpOut[i] == "-"))
+                else if ((i == 0) & (ExpOut[i] == "-"))
                 {
                     //Case -a + b
-                    ExpOut.Insert(i , "0");
+                    //ExpOut.Insert(i , "0");
+                    ExpOut.Insert(i, "(");
+                    ExpOut.Insert(i + 1, "0");
+                    ExpOut.Insert(i + 4, ")");
+                    i += 2;
                 }
-                if ((ExpOut[i] == "-") & (ExpOut[i + 1] == "(") & (i == 0))
+                else if ((ExpOut[i] == "-") & (ExpOut[i + 1] == "(") & (i == 0))
                 {
                     //Case -(a + b)
+                    //ExpOut.Insert(i, "0");
+                    ExpOut.Insert(i, "(");
+                    ExpOut.Insert(i + 1, "0");
                     ExpOut.Insert(i, "0");
+                    i += 2;
                 }
+
                 //Relic - might not be needed
                 if (((ExpOut[i] == "-") & (ExpOut[i + 1] == "~")) |
                     ((ExpOut[i] == "~") & (ExpOut[i + 1] == "-")))

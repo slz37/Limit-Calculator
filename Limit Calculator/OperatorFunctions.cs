@@ -26,6 +26,8 @@ namespace Limit_Calculator
             }
             else if (op == "-")
             {
+                double.Parse(a);
+                double.Parse(b);
                 return double.Parse(a) - double.Parse(b);
             }
             else if (op == "*")

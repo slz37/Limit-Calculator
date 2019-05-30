@@ -176,7 +176,8 @@ namespace Limit_Calculator
 
         /// <summary>
         /// Takes a given expression and evaluates the
-        /// derivative of it.
+        /// derivative of it. Acts as a dictionary of
+        /// derivatives of operators.
         /// </summary>
         /// <param name="func"></param>
         /// <returns></returns>
@@ -642,10 +643,19 @@ namespace Limit_Calculator
                     {
                         return "(" + "0" + ")";
                     }
-                    //log_x(a)
+                    //log_a(x)
+                    else if (tempB == "1")
+                    {
+                        return "(" + "1" + "/" + "(" + B[0] + "*" + "ln" + "(" + A[0] + ")" + ")" + ")";
+                    }
+                    //log_a(x...)
                     else
                     {
-                        return "(" + "-" + "ln" + "(" + A[0] + ")" + "/" + "(" + B[0] + "*" + "ln" + "(" + B[0] + ")" + "^" + "2" + ")" + ")";
+                        //Convert to infix
+                        string stringB = Calculator.Convert2Infix(B);
+
+                        return "(" + CompleteExpressions(B) + "/" + "(" + stringB + "*" + "ln" + "(" + A[0] + ")" + ")" + ")";
+                        //return "(" + "-" + "ln" + "(" + A[0] + ")" + "/" + "(" + B[0] + "*" + "ln" + "(" + B[0] + ")" + "^" + "2" + ")" + ")";
                     }
                 }
                 else if (tempB == "0")

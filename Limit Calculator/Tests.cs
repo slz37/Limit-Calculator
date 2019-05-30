@@ -87,6 +87,8 @@ namespace Limit_Calculator
         public static void DebugDerivative()
         {
             Console.WriteLine("Debugging derivative methods:");
+
+            //Functions to test derivative of
             string[] funcList = {"(x+1)^(x+1)", "(x+2)^2", "x^5",
                                  "2^(x+2)", "x+x+x-x", "ln(1/x)",
                                  "(x+2)/(x-5)", "(x*2)+(x/5)", "2+(x+2)^2+2^x",
@@ -94,7 +96,7 @@ namespace Limit_Calculator
                                  "x", "-x", "-2^x",
                                  "sin(5)", "sin(x)", "sin(x^2)",
                                  "tan(5)", "tan(x)", "tan(x^2)",
-                                 "log5(5)", "logx(5)", "log5(x)", "log5(x^2)",
+                                 "log5(5)", "log5(x)", "log5(x^2)",
                                  "arccos(5)", "arccos(x)", "arccos(x^2)", //Everything on and below this was done with x = 0.5
                                  "arctan(5)", "arctan(x)", "arctan(x^2)",
                                  "arcsin(5)", "arcsin(x)","arcsin(x^2)",
@@ -113,7 +115,7 @@ namespace Limit_Calculator
                                    "1", "-1", "-2.77258",
                                    "0", "-0.416146", "-2.614574",
                                    "0", "5.774399", "9.36220048",
-                                   "0", "-6.69967", "1.24267", "2.48534",
+                                   "0", "0.310667", "0.621334",
                                    "0", "-1.1547", "-1.0328", //Everything on and below this was done with x = 0.5
                                    "0", "0.8", "0.941176",
                                    "0", "1.1547", "1.0328",
@@ -127,6 +129,7 @@ namespace Limit_Calculator
             //Run through test suite
             for (int i = 0; i < funcList.Length; i++)
             {
+                //Attempt to calculate derivative, throw error if fails
                 try
                 {
                     string func = funcList[i];
@@ -144,7 +147,9 @@ namespace Limit_Calculator
                     string funcPostFix = Calculator.Convert2Postfix(analytic_func);
                     string test = DerivativeCalculator.Derivative(funcPostFix);
 
-                    if (i < 27)
+                    //Choose what value to evaluate at based on function domain
+                    int index = Array.IndexOf(funcList, "arccos(5)");
+                    if (i < index)
                     {
                         Console.WriteLine(func + ": " + Calculator.Calculate(test, 2) + " ans: " + ans);
                     }
