@@ -13,10 +13,8 @@ code fails since <img src="https://latex.codecogs.com/svg.latex?\sqrt{x}" title=
 ## Current Status:
 Derivatives functioning: </br>
 +, -, \*, /, ln, ^, sin, cos, tan, arcsin, arccos, arctan, cot, sec, csc, sqrt, abs </br>
-Derivatives left: </br>
-log, !, % </br>
 
-Once all these are implemented, L'Hopital's rule should function correctly, and consequently, so should all infinite limits.
+Testing of L'Hopital's Rule for indeterminate limits.
 
 ## Sources Used for Research:
 
