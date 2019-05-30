@@ -12,7 +12,7 @@ code fails since <img src="https://latex.codecogs.com/svg.latex?\sqrt{x}" title=
 
 ## Current Status:
 Derivatives functioning: </br>
-+, -, \*, /, ln, ^, sin, cos, tan, arcsin, arccos, arctan, cot, sec, csc, sqrt, abs </br>
++, -, \*, /, ln, ^, sin, cos, tan, arcsin, arccos, arctan, cot, sec, csc, sqrt, abs, log </br>
 
 Testing of L'Hopital's Rule for indeterminate limits.
 
