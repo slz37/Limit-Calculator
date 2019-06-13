@@ -11,10 +11,7 @@ code fails since <img src="https://latex.codecogs.com/svg.latex?\sqrt{x}" title=
 
 
 ## Current Status:
-Derivatives functioning: </br>
-+, -, \*, /, ln, ^, sin, cos, tan, arcsin, arccos, arctan, cot, sec, csc, sqrt, abs, log </br>
-
-Testing of L'Hopital's Rule for indeterminate limits.
+L'Hopital's rule runs into the issue of non-simplified expressions after taking the derivatives of the numerator and denominator. This results in a function that evaluates to NaN when unsimplified but evaluates to the correct limit if simplified. I'm not sure if I can fix this issue, as that would mean writing an expression tree of some sort to translate the function to its simplest form. At the momemt, I am pausing progress here.
 
 ## Sources Used for Research:
 
